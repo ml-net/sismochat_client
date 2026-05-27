@@ -1,0 +1,18 @@
+{
+  "app": {
+    "name": "SiSMoChat"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in"
+  },
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "chat": {
+    "title": "Chat",
+    "noMessages": "No messages yet"
+  }
+}
