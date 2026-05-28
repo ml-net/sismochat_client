@@ -20,7 +20,7 @@ This repository contains the definitive client application, built as a Progressi
 
 ## Prerequisites
 
-- Node.js >= 22
+- Node.js >= 22.22.1
 - npm >= 9
 
 ## Local development
