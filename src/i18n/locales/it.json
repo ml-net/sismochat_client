@@ -1,7 +1,4 @@
 {
-  "app": {
-    "name": "SiSMoChat"
-  },
   "login": {
     "title": "Accedi",
     "email": "Email",
