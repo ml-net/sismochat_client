@@ -1,6 +1,6 @@
 # Release Verification Checklist
 
-Use this checklist after every deploy to verify no regressions.
+Use this checklist after every deploy to verify new features work correctly and no regressions were introduced.
 
 ## 1. PWA & Installation
 - [ ] 1.1 App loads at production URL
