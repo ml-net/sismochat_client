@@ -4,9 +4,9 @@ import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+const distDir = resolve(__dirname, '../dist')
 
 describe('PWA Configuration', () => {
-  const distDir = resolve(__dirname, '../dist')
   const manifestPath = resolve(distDir, 'manifest.webmanifest')
 
   it('generates manifest.webmanifest in build output', () => {
@@ -35,5 +35,18 @@ describe('PWA Configuration', () => {
 
   it('generates registerSW.js', () => {
     expect(existsSync(resolve(distDir, 'registerSW.js'))).toBe(true)
+  })
+})
+
+describe('Service Worker', () => {
+  it('generates custom sw.js with push handler', () => {
+    const sw = readFileSync(resolve(distDir, 'sw.js'), 'utf-8')
+    expect(sw).toContain('push')
+    expect(sw).toContain('notificationclick')
+    expect(sw).toContain('showNotification')
+  })
+
+  it('includes offline fallback page in build', () => {
+    expect(existsSync(resolve(distDir, 'offline.html'))).toBe(true)
   })
 })
