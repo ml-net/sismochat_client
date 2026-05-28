@@ -14,5 +14,8 @@
   "chat": {
     "title": "Chat",
     "noMessages": "No messages yet"
+  },
+  "notFound": {
+    "message": "Page not found"
   }
 }

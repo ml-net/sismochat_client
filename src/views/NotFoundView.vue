@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>{{ t('chat.title') }}</h1>
+    <h1>404</h1>
+    <p>{{ t('notFound.message') }}</p>
   </div>
 </template>
 
