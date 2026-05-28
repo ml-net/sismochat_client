@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+tone_instructions: >
+  Be concise and direct. Focus on real issues, not style preferences.
+  Use severity prefixes: 🔴 Blocking, 🟡 Suggestion, 💡 Nit.
+early_access: false
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  poem: false
+  review_status: true
+  auto_review:
+    enabled: true
+    drafts: true
+    auto_incremental_review: true
+  path_filters:
+    - "!package-lock.json"
+    - "!dist/**"
+  path_instructions:
+    - path: "src/**/*.vue"
+      instructions: >
+        All user-facing strings MUST use vue-i18n translation keys via useI18n().
+        No hardcoded text in <template>. Verify corresponding keys exist in
+        src/i18n/locales/en.json and src/i18n/locales/it.json.
+    - path: "src/**/*.{js,ts}"
+      instructions: >
+        Use Composition API style. Pinia stores must use setup syntax (defineStore with function).
+        Imports should be explicit, no wildcard imports.
+    - path: "src/router/**"
+      instructions: >
+        Routes must have a name property. Lazy-load all views except the login page.
+    - path: "src/stores/**"
+      instructions: >
+        Stores use Pinia setup syntax. State that persists across sessions
+        should be explicitly marked for localStorage persistence.
+chat:
+  auto_reply: true
+knowledge_base:
+  opt_out: false
+  learnings:
+    scope: "local"
+  code_guidelines:
+    enabled: true
