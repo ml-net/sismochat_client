@@ -1,6 +1,6 @@
-const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY || ''
+const VAPID_PUBLIC_KEY: string = import.meta.env.VITE_VAPID_PUBLIC_KEY || ''
 
-function urlBase64ToUint8Array(base64String) {
+function urlBase64ToUint8Array(base64String: string): Uint8Array {
   const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
   const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/')
   const rawData = atob(base64)
@@ -11,7 +11,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray
 }
 
-export async function subscribeToPush() {
+export async function subscribeToPush(): Promise<PushSubscription | null> {
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     return null
   }
@@ -25,7 +25,7 @@ export async function subscribeToPush() {
     const registration = await navigator.serviceWorker.ready
     const subscription = await registration.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY).buffer as ArrayBuffer,
     })
     return subscription
   } catch (error) {
@@ -34,7 +34,7 @@ export async function subscribeToPush() {
   }
 }
 
-export async function getExistingSubscription() {
+export async function getExistingSubscription(): Promise<PushSubscription | null> {
   if (!('serviceWorker' in navigator)) return null
   try {
     const registration = await navigator.serviceWorker.ready
