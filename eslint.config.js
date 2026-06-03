@@ -5,15 +5,25 @@ import globals from 'globals'
 
 export default tseslint.config(
   js.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...pluginVue.configs['flat/recommended'],
   {
     languageOptions: {
+      parserOptions: {
+        projectService: true,
+        extraFileExtensions: ['.vue'],
+      },
       globals: globals.browser,
     },
     rules: {
       'vue/multi-word-component-names': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
     },
+  },
+  {
+    files: ['**/*.js'],
+    ...tseslint.configs.disableTypeChecked,
   },
   {
     files: ['*.vue', '**/*.vue'],
