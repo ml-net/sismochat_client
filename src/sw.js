@@ -5,18 +5,33 @@ import { NetworkFirst } from 'workbox-strategies'
 // Precache static assets injected by vite-plugin-pwa
 precacheAndRoute(self.__WB_MANIFEST)
 
+const OFFLINE_URL = '/offline.html'
+
 // Offline fallback for navigation requests
 const navigationHandler = new NetworkFirst({
   cacheName: 'navigations',
 })
 
-registerRoute(new NavigationRoute(navigationHandler, {
-  denylist: [/^\/__/],
-}))
+const navigationRoute = new NavigationRoute(
+  async (params) => {
+    try {
+      return await navigationHandler.handle(params)
+    } catch {
+      return caches.match(OFFLINE_URL)
+    }
+  },
+  { denylist: [/^\/__/] },
+)
+registerRoute(navigationRoute)
 
 // Push event — show notification
 self.addEventListener('push', (event) => {
-  const data = event.data ? event.data.json() : {}
+  let data
+  try {
+    data = event.data ? event.data.json() : {}
+  } catch {
+    data = {}
+  }
   const title = data.title || 'SiSMoChat'
   const options = {
     body: data.body || '',
@@ -30,12 +45,16 @@ self.addEventListener('push', (event) => {
 // Notification click — open or focus the app
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
-  const url = event.notification.data || '/'
+  const urlPath = event.notification.data || '/'
+  const targetUrl = new URL(urlPath, self.location.origin)
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
-      const existing = clients.find((c) => c.url.includes(url) && 'focus' in c)
+      const existing = clients.find((c) => {
+        const clientUrl = new URL(c.url)
+        return clientUrl.origin === targetUrl.origin && clientUrl.pathname === targetUrl.pathname && 'focus' in c
+      })
       if (existing) return existing.focus()
-      return self.clients.openWindow(url)
-    })
+      return self.clients.openWindow(targetUrl.href)
+    }),
   )
 })

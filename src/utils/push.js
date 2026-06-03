@@ -21,17 +21,26 @@ export async function subscribeToPush() {
     return null
   }
 
-  const registration = await navigator.serviceWorker.ready
-  const subscription = await registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-  })
-
-  return subscription
+  try {
+    const registration = await navigator.serviceWorker.ready
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+    })
+    return subscription
+  } catch (error) {
+    console.error('[Push] subscribe failed:', error)
+    return null
+  }
 }
 
 export async function getExistingSubscription() {
   if (!('serviceWorker' in navigator)) return null
-  const registration = await navigator.serviceWorker.ready
-  return registration.pushManager.getSubscription()
+  try {
+    const registration = await navigator.serviceWorker.ready
+    return registration.pushManager.getSubscription()
+  } catch (error) {
+    console.error('[Push] getSubscription failed:', error)
+    return null
+  }
 }

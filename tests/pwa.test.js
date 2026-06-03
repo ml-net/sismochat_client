@@ -49,4 +49,9 @@ describe('Service Worker', () => {
   it('includes offline fallback page in build', () => {
     expect(existsSync(resolve(distDir, 'offline.html'))).toBe(true)
   })
+
+  it('references offline.html as navigation fallback', () => {
+    const sw = readFileSync(resolve(distDir, 'sw.js'), 'utf-8')
+    expect(sw).toMatch(/offline\.html/)
+  })
 })
