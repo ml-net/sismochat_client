@@ -46,7 +46,10 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
   const urlPath = event.notification.data || '/'
-  const targetUrl = new URL(urlPath, self.location.origin)
+  let targetUrl = new URL(urlPath, self.location.origin)
+  if (targetUrl.origin !== self.location.origin) {
+    targetUrl = new URL('/', self.location.origin)
+  }
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
       const existing = clients.find((c) => {
