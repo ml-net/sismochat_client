@@ -17,6 +17,12 @@ export default tseslint.config(
     },
     rules: {
       'vue/multi-word-component-names': 'off',
+    },
+  },
+  {
+    // TODO: re-enable when vue-tsc exposes component types to eslint (#32)
+    files: ['src/main.ts', 'src/router/index.ts'],
+    rules: {
       '@typescript-eslint/no-unsafe-argument': 'off',
       '@typescript-eslint/no-unsafe-assignment': 'off',
     },
