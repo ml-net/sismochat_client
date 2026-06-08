@@ -1,1 +1,50 @@
+@layer primevue;
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #10b981;
+  --color-primary-light: #34d399;
+  --color-primary-dark: #059669;
+  --color-secondary: #3b82f6;
+  --color-secondary-light: #60a5fa;
+}
+
+/* Theme variables for runtime switching */
+:root {
+  --theme-primary: #10b981;
+  --theme-primary-light: #34d399;
+  --theme-primary-dark: #059669;
+  --theme-secondary: #3b82f6;
+  --theme-secondary-light: #60a5fa;
+  --theme-surface: rgba(17, 24, 39, 0.8);
+  --theme-surface-light: rgba(31, 41, 55, 0.5);
+  --theme-surface-border: rgba(16, 185, 129, 0.2);
+  --theme-glow: rgba(16, 185, 129, 0.3);
+  --theme-glow-secondary: rgba(59, 130, 246, 0.3);
+}
+
+:root[data-theme="violet"] {
+  --theme-primary: #8b5cf6;
+  --theme-primary-light: #a78bfa;
+  --theme-primary-dark: #7c3aed;
+  --theme-secondary: #22d3ee;
+  --theme-secondary-light: #67e8f9;
+  --theme-surface: rgba(17, 24, 39, 0.8);
+  --theme-surface-light: rgba(31, 41, 55, 0.5);
+  --theme-surface-border: rgba(139, 92, 246, 0.2);
+  --theme-glow: rgba(139, 92, 246, 0.3);
+  --theme-glow-secondary: rgba(34, 211, 238, 0.3);
+}
+
+:root[data-theme="ocean"] {
+  --theme-primary: #2563eb;
+  --theme-primary-light: #3b82f6;
+  --theme-primary-dark: #1d4ed8;
+  --theme-secondary: #14b8a6;
+  --theme-secondary-light: #2dd4bf;
+  --theme-surface: rgba(17, 24, 39, 0.8);
+  --theme-surface-light: rgba(31, 41, 55, 0.5);
+  --theme-surface-border: rgba(37, 99, 235, 0.2);
+  --theme-glow: rgba(37, 99, 235, 0.3);
+  --theme-glow-secondary: rgba(20, 184, 166, 0.3);
+}
