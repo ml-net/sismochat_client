@@ -18,7 +18,26 @@
   },
   "register": {
     "title": "Registrazione",
-    "subtitle": "Crea il tuo account"
+    "subtitle": "Crea il tuo account",
+    "email": "Email",
+    "emailPlaceholder": "tu{'@'}esempio.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "confirmPassword": "Conferma password",
+    "submit": "Crea account",
+    "submitting": "Creazione...",
+    "hasAccount": "Hai già un account?",
+    "signIn": "Accedi",
+    "errors": {
+      "emailRequired": "L'email è obbligatoria",
+      "emailInvalid": "Inserisci un'email valida",
+      "emailTaken": "Questa email è già registrata",
+      "passwordRequired": "La password è obbligatoria",
+      "passwordMin": "La password deve avere almeno 6 caratteri",
+      "confirmRequired": "Conferma la password",
+      "passwordMismatch": "Le password non coincidono",
+      "serverError": "Qualcosa è andato storto. Riprova."
+    }
   },
   "resetPassword": {
     "title": "Reimposta password",

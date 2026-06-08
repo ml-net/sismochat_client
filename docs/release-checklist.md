@@ -38,14 +38,27 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 3.11 Tab key navigates through form fields in logical order
 - [ ] 3.12 Focus indicator visible on all interactive elements
 
-## 4. Theming
+## 4. Registration
+
+- [ ] 4.1 Register with valid email + password (≥6 chars) → redirected to login
+- [ ] 4.2 Validation: empty email → inline error shown
+- [ ] 4.3 Validation: invalid email format → inline error shown
+- [ ] 4.4 Validation: empty password → inline error shown
+- [ ] 4.5 Validation: password < 6 chars → inline error shown
+- [ ] 4.6 Validation: passwords don't match → inline error shown
+- [ ] 4.7 API error: duplicate email → clear error message displayed
+- [ ] 4.8 API error: server unavailable → generic error message displayed
+- [ ] 4.9 Loading state shown during API call (button spinner)
+- [ ] 4.10 "Already have an account?" link navigates to login
+
+## 5. Theming
 
 - [ ] 4.1 Default Emerald theme applied (green accents, blue secondary)
 - [ ] 4.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
 - [ ] 4.3 Glow effects visible on card border and button
 - [ ] 4.4 Background blobs animate (pulse)
 
-## 5. Internationalization
+## 6. Internationalization
 
 - [ ] 5.1 English locale loads (browser language = en)
 - [ ] 5.2 Italian locale loads (browser language = it)
@@ -53,7 +66,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 5.4 Email placeholder renders correctly (no `@` parsing error)
 - [ ] 5.5 Fallback to English for unsupported browser languages
 
-## 6. Routing
+## 7. Routing
 
 - [ ] 6.1 `/` → splash
 - [ ] 6.2 `/login` → login page (immediately, no lazy-load delay)
@@ -65,7 +78,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 6.8 `/nonexistent` → 404 page
 - [ ] 6.9 Browser back/forward navigation works
 
-## 7. Build & Deploy
+## 8. Build & Deploy
 
 - [ ] 7.1 No console errors on any page
 - [ ] 7.2 No console warnings (except expected deprecations)
