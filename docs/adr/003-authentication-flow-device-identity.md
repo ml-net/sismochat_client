@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Accepted — implementation planned for v0.2.0 (parent auth) and v0.3.0 (child provisioning).
 
 ## Context
 
@@ -24,7 +24,7 @@ The client must handle both roles on any device, with a single app binary (PWA).
 
 ### App startup flow
 
-```
+```text
 App open → Splash screen (always)
   - Show branding / animation
   - Display "Login parent" link (always visible)

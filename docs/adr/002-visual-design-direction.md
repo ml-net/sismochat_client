@@ -22,6 +22,7 @@ Reference apps that resonate with this age group: Discord, Telegram, game launch
 Three visual variants were prototyped (branch `spike/design-exploration`):
 
 ### 1. Dark + Neon
+
 - Dark gray background (#030712), animated gradient blobs
 - Solid dark card with subtle glow border
 - Input fields with colored glow on focus
@@ -29,6 +30,7 @@ Three visual variants were prototyped (branch `spike/design-exploration`):
 - **Feeling:** gaming, energetic, modern
 
 ### 2. Glassmorphism
+
 - Very dark navy background (#0f0f23), large colorful blobs (fuchsia/blue/emerald)
 - Semi-transparent card (backdrop-blur, white/5 bg, white/10 border)
 - Inputs inherit the glass effect
@@ -36,6 +38,7 @@ Three visual variants were prototyped (branch `spike/design-exploration`):
 - **Feeling:** futuristic, premium, depth
 
 ### 3. Blurple (Discord-like)
+
 - Solid indigo/violet background (#5865F2)
 - Dark card (#313338), minimal decoration
 - Standard dark inputs, no glow effects
@@ -115,7 +118,7 @@ Additional themes may be added later. Implementation via CSS custom properties o
 ## Consequences
 
 - Dark theme requires careful contrast testing (WCAG AA compliance)
-- Glow effects are CSS-only (no JS, no performance cost)
+- Glow effects are CSS-only (no JS runtime cost; may incur minor paint/compositing overhead on low-end devices)
 - Parents using the app (registration, dashboard) will see the same dark theme — acceptable since they interact briefly
 - Theme personalization is a dedicated story in the personalization epic (post-v0.4.0)
 
