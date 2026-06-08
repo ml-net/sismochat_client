@@ -9,7 +9,7 @@
     <!-- Branding -->
     <div class="relative z-10 text-center">
       <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-[0_0_10px_var(--theme-glow)]">
-        SiSMoChat
+        {{ APP_NAME }}
       </h1>
       <p class="text-gray-400 text-sm">
         {{ t('splash.tagline') }}
@@ -30,21 +30,26 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { APP_NAME } from '../constants'
 
 const router = useRouter()
 const { t } = useI18n()
 
 onMounted(() => {
   setTimeout(() => {
-    const profile = localStorage.getItem('sismochat_profile')
-    if (profile) {
-      const parsed = JSON.parse(profile) as { role: string }
-      if (parsed.role === '__parent__') {
-        void router.replace('/dashboard')
+    try {
+      const profile = localStorage.getItem('sismochat_profile')
+      if (profile) {
+        const parsed = JSON.parse(profile) as { role?: string }
+        if (parsed.role === '__parent__') {
+          void router.replace('/dashboard')
+        } else {
+          void router.replace('/chat')
+        }
       } else {
-        void router.replace('/chat')
+        void router.replace('/login')
       }
-    } else {
+    } catch {
       void router.replace('/login')
     }
   }, 2500)

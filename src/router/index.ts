@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
   { path: '/', name: 'splash', component: () => import('../views/SplashView.vue') },
-  { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
+  { path: '/login', name: 'login', component: LoginView },
   { path: '/register', name: 'register', component: () => import('../views/RegisterView.vue') },
   { path: '/reset-password', name: 'reset-password', component: () => import('../views/ResetPasswordView.vue') },
   { path: '/change-password', name: 'change-password', component: () => import('../views/ChangePasswordView.vue') },

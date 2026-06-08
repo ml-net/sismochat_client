@@ -9,6 +9,7 @@
     "email": "Email",
     "emailPlaceholder": "tu{'@'}esempio.com",
     "password": "Password",
+    "passwordPlaceholder": "••••••••",
     "rememberMe": "Ricordami",
     "forgot": "Dimenticata?",
     "submit": "Accedi",

@@ -1,7 +1,7 @@
 <template>
   <AuthLayout>
     <h1 class="text-center text-3xl font-bold text-white mb-2 drop-shadow-[0_0_10px_var(--theme-glow)]">
-      SiSMoChat
+      {{ APP_NAME }}
     </h1>
     <p class="text-center text-gray-400 text-sm mb-8">
       {{ t('login.subtitle') }}
@@ -22,7 +22,7 @@
         id="password"
         :label="t('login.password')"
         type="password"
-        placeholder="••••••••"
+        :placeholder="t('login.passwordPlaceholder')"
       />
 
       <div class="flex items-center justify-between text-sm">
@@ -60,6 +60,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { APP_NAME } from '../constants'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import AppInput from '../components/auth/AppInput.vue'
 import AppButton from '../components/auth/AppButton.vue'
