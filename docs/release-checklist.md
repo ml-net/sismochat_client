@@ -35,6 +35,8 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 3.8 Navigation links work (login ↔ register, login → reset)
 - [ ] 3.9 Responsive: renders correctly on 320px width
 - [ ] 3.10 Responsive: renders correctly on desktop
+- [ ] 3.11 Tab key navigates through form fields in logical order
+- [ ] 3.12 Focus indicator visible on all interactive elements
 
 ## 4. Theming
 
