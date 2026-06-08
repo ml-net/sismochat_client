@@ -1,9 +1,31 @@
 {
+  "splash": {
+    "tagline": "Secure messaging for families",
+    "parentLogin": "Parent login"
+  },
   "login": {
     "title": "Login",
+    "subtitle": "Welcome back",
     "email": "Email",
+    "emailPlaceholder": "you{'@'}example.com",
     "password": "Password",
-    "submit": "Sign in"
+    "rememberMe": "Remember me",
+    "forgot": "Forgot?",
+    "submit": "Sign in",
+    "noAccount": "No account?",
+    "signUp": "Sign up"
+  },
+  "register": {
+    "title": "Register",
+    "subtitle": "Create your account"
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "subtitle": "Reset your password"
+  },
+  "changePassword": {
+    "title": "Change password",
+    "subtitle": "Choose a new password"
   },
   "dashboard": {
     "title": "Dashboard"

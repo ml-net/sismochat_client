@@ -1,9 +1,31 @@
 {
+  "splash": {
+    "tagline": "Messaggistica sicura per le famiglie",
+    "parentLogin": "Accesso genitore"
+  },
   "login": {
     "title": "Accedi",
+    "subtitle": "Bentornato",
     "email": "Email",
+    "emailPlaceholder": "tu{'@'}esempio.com",
     "password": "Password",
-    "submit": "Accedi"
+    "rememberMe": "Ricordami",
+    "forgot": "Dimenticata?",
+    "submit": "Accedi",
+    "noAccount": "Non hai un account?",
+    "signUp": "Registrati"
+  },
+  "register": {
+    "title": "Registrazione",
+    "subtitle": "Crea il tuo account"
+  },
+  "resetPassword": {
+    "title": "Reimposta password",
+    "subtitle": "Reimposta la tua password"
+  },
+  "changePassword": {
+    "title": "Cambia password",
+    "subtitle": "Scegli una nuova password"
   },
   "dashboard": {
     "title": "Pannello"
