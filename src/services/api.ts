@@ -25,7 +25,12 @@ export async function apiPost<T>(path: string, body: Record<string, unknown>): P
   if (!contentType.includes('application/json')) {
     throw new ApiRequestError(-1, 'Unexpected response from server')
   }
-  const data: unknown = await res.json()
+  let data: unknown
+  try {
+    data = await res.json()
+  } catch {
+    throw new ApiRequestError(-1, 'Invalid response from server')
+  }
   if (!res.ok) {
     const err = data as ApiError
     throw new ApiRequestError(err.errCode, err.errDesc)

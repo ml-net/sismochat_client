@@ -1,5 +1,7 @@
 import { apiPost } from './api'
 
+export const ERR_EMAIL_TAKEN = 2
+
 interface RegisterResponse {
   ID: number
 }

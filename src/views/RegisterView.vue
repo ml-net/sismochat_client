@@ -78,7 +78,7 @@ import { APP_NAME } from '../constants'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import AppInput from '../components/auth/AppInput.vue'
 import AppButton from '../components/auth/AppButton.vue'
-import { registerParent } from '../services/auth'
+import { registerParent, ERR_EMAIL_TAKEN } from '../services/auth'
 import { ApiRequestError } from '../services/api'
 
 const router = useRouter()
@@ -124,7 +124,7 @@ async function onSubmit() {
     await registerParent(form.email, form.password)
     void router.push({ name: 'login', query: { registered: '1' } })
   } catch (err) {
-    if (err instanceof ApiRequestError && err.errCode === 2) {
+    if (err instanceof ApiRequestError && err.errCode === ERR_EMAIL_TAKEN) {
       serverError.value = t('register.errors.emailTaken')
     } else {
       serverError.value = t('register.errors.serverError')
