@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 src/views/spike/
+
+# AI config (local only)
+.kiro/
+.qodo/
