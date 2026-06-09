@@ -36,8 +36,12 @@ export async function apiPost<T>(path: string, body: Record<string, unknown>): P
   }
   if (!res.ok) {
     const err = data as Record<string, unknown>
-    const { errCode, errDesc, ...extra } = err
-    throw new ApiRequestError(errCode as number, errDesc as string, extra)
+    const code = typeof err.errCode === 'number' ? err.errCode : -1
+    const desc = typeof err.errDesc === 'string' ? err.errDesc : 'Unknown error'
+    const extra = Object.fromEntries(
+      Object.entries(err).filter(([k]) => k !== 'errCode' && k !== 'errDesc'),
+    )
+    throw new ApiRequestError(code, desc, extra)
   }
   return data as T
 }
