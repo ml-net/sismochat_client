@@ -51,14 +51,28 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 4.9 Loading state shown during API call (button spinner)
 - [ ] 4.10 "Already have an account?" link navigates to login
 
-## 5. Theming
+## 5. Login
+
+- [ ] 5.1 Login with valid credentials → redirected to dashboard
+- [ ] 5.2 Validation: empty email → inline error
+- [ ] 5.3 Validation: empty password → inline error
+- [ ] 5.4 Wrong password → "Invalid email or password"
+- [ ] 5.5 Non-existent email → "Invalid email or password"
+- [ ] 5.6 Server unreachable → generic error message
+- [ ] 5.7 Loading state shown during API call
+- [ ] 5.8 "Remember me" checked → token in localStorage, survives browser restart
+- [ ] 5.9 "Remember me" unchecked → token in sessionStorage, cleared on tab close
+- [ ] 5.10 After login with remember me: reload → splash redirects to /dashboard
+- [ ] 5.11 Links to register and reset password work
+
+## 6. Theming
 
 - [ ] 4.1 Default Emerald theme applied (green accents, blue secondary)
 - [ ] 4.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
 - [ ] 4.3 Glow effects visible on card border and button
 - [ ] 4.4 Background blobs animate (pulse)
 
-## 6. Internationalization
+## 7. Internationalization
 
 - [ ] 5.1 English locale loads (browser language = en)
 - [ ] 5.2 Italian locale loads (browser language = it)
@@ -66,7 +80,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 5.4 Email placeholder renders correctly (no `@` parsing error)
 - [ ] 5.5 Fallback to English for unsupported browser languages
 
-## 7. Routing
+## 8. Routing
 
 - [ ] 6.1 `/` → splash
 - [ ] 6.2 `/login` → login page (immediately, no lazy-load delay)
@@ -78,7 +92,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 6.8 `/nonexistent` → 404 page
 - [ ] 6.9 Browser back/forward navigation works
 
-## 8. Build & Deploy
+## 9. Build & Deploy
 
 - [ ] 7.1 No console errors on any page
 - [ ] 7.2 No console warnings (except expected deprecations)
