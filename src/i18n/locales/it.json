@@ -65,6 +65,7 @@
       "emailRequired": "L'email è obbligatoria",
       "otpRequired": "Il codice è obbligatorio",
       "otpLength": "Il codice deve essere di 6 cifre",
+      "invalidOtp": "Codice non valido o scaduto. Riprova.",
       "passwordRequired": "La nuova password è obbligatoria",
       "passwordMin": "La password deve avere almeno 6 caratteri",
       "serverError": "Qualcosa è andato storto. Riprova."
