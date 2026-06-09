@@ -7,11 +7,13 @@ export interface ApiError {
 
 export class ApiRequestError extends Error implements ApiError {
   errCode: number
-  errDesc: string
-  constructor(errCode: number, errDesc: string) {
+  errDesc: string;
+  [key: string]: unknown
+  constructor(errCode: number, errDesc: string, extra?: Record<string, unknown>) {
     super(errDesc)
     this.errCode = errCode
     this.errDesc = errDesc
+    if (extra) Object.assign(this, extra)
   }
 }
 
@@ -33,8 +35,9 @@ export async function apiPost<T>(path: string, body: Record<string, unknown>): P
     throw new ApiRequestError(-1, 'Invalid response from server')
   }
   if (!res.ok) {
-    const err = data as ApiError
-    throw new ApiRequestError(err.errCode, err.errDesc)
+    const err = data as Record<string, unknown>
+    const { errCode, errDesc, ...extra } = err
+    throw new ApiRequestError(errCode as number, errDesc as string, extra)
   }
   return data as T
 }

@@ -160,7 +160,15 @@ async function onResetPassword() {
     void router.push({ name: 'login', query: { reset: '1' } })
   } catch (err) {
     if (err instanceof ApiRequestError && err.errCode === ERR_INVALID_OTP) {
-      serverError.value = err.errDesc
+      const reason = err.reason as string | undefined
+      const remaining = (err.remaining as number) ?? 0
+      if (reason === 'expired') {
+        serverError.value = t('resetPassword.errors.otpExpired')
+      } else if (reason === 'too_many') {
+        serverError.value = t('resetPassword.errors.tooManyAttempts')
+      } else {
+        serverError.value = t('resetPassword.errors.invalidOtp', { remaining })
+      }
     } else {
       serverError.value = t('resetPassword.errors.serverError')
     }

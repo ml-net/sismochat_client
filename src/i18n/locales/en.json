@@ -65,7 +65,9 @@
       "emailRequired": "Email is required",
       "otpRequired": "Reset code is required",
       "otpLength": "Code must be 6 digits",
-      "invalidOtp": "Invalid or expired code. Please try again.",
+      "invalidOtp": "Invalid code. {remaining} attempts remaining.",
+      "otpExpired": "Code expired. Please request a new one.",
+      "tooManyAttempts": "Too many attempts. Please request a new code.",
       "passwordRequired": "New password is required",
       "passwordMin": "Password must be at least 6 characters",
       "serverError": "Something went wrong. Please try again."
