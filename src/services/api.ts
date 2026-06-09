@@ -21,6 +21,7 @@ export async function apiPost<T>(path: string, body: Record<string, unknown>): P
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
+  if (res.status === 204) return undefined as T
   const contentType = res.headers.get('content-type') || ''
   if (!contentType.includes('application/json')) {
     throw new ApiRequestError(-1, 'Unexpected response from server')

@@ -18,3 +18,11 @@ export function registerParent(email: string, password: string): Promise<Registe
 export function loginParent(email: string, password: string): Promise<LoginResponse> {
   return apiPost<LoginResponse>('/api/v1/auth/parent', { email, pwd: password })
 }
+
+export function requestPasswordReset(email: string): Promise<{ msg: string }> {
+  return apiPost<{ msg: string }>('/api/v1/parent/reset-request', { email })
+}
+
+export function resetPassword(email: string, otp: string, newPassword: string): Promise<void> {
+  return apiPost<void>('/api/v1/parent/reset', { email, otp, newPassword })
+}
