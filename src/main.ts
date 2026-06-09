@@ -5,11 +5,13 @@ import Aura from '@primeuix/themes/aura'
 import router from './router'
 import i18n from './i18n'
 import App from './App.vue'
+import { useAuthStore } from './stores/auth'
 import './style.css'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(i18n)
 app.use(PrimeVue, {
@@ -23,5 +25,7 @@ app.use(PrimeVue, {
     }
   }
 })
+
+useAuthStore().hydrate()
 
 app.mount('#app')

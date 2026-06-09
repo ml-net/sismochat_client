@@ -9,25 +9,32 @@
 
     <form
       class="space-y-5"
-      @submit.prevent
+      @submit.prevent="onSubmit"
     >
       <AppInput
         id="email"
+        v-model="form.email"
         :label="t('login.email')"
         type="email"
         :placeholder="t('login.emailPlaceholder')"
+        :error="errors.email"
+        :disabled="loading"
       />
 
       <AppInput
         id="password"
+        v-model="form.password"
         :label="t('login.password')"
         type="password"
         :placeholder="t('login.passwordPlaceholder')"
+        :error="errors.password"
+        :disabled="loading"
       />
 
       <div class="flex items-center justify-between text-sm">
         <label class="flex items-center gap-2 text-gray-400 cursor-pointer">
           <input
+            v-model="form.rememberMe"
             type="checkbox"
             class="rounded border-gray-600 bg-gray-800 text-primary focus:ring-primary/50"
           >
@@ -41,7 +48,19 @@
         </router-link>
       </div>
 
-      <AppButton type="submit">
+      <p
+        v-if="serverError"
+        class="text-sm text-red-400"
+        role="alert"
+      >
+        {{ serverError }}
+      </p>
+
+      <AppButton
+        type="submit"
+        :loading="loading"
+        :loading-text="t('login.submitting')"
+      >
         {{ t('login.submit') }}
       </AppButton>
     </form>
@@ -59,11 +78,64 @@
 </template>
 
 <script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { APP_NAME } from '../constants'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import AppInput from '../components/auth/AppInput.vue'
 import AppButton from '../components/auth/AppButton.vue'
+import { loginParent } from '../services/auth'
+import { ApiRequestError } from '../services/api'
+import { useAuthStore } from '../stores/auth'
 
+const router = useRouter()
 const { t } = useI18n()
+const authStore = useAuthStore()
+
+const form = reactive({ email: '', password: '', rememberMe: false })
+const errors = reactive({ email: '', password: '' })
+const serverError = ref('')
+const loading = ref(false)
+
+function validate(): boolean {
+  errors.email = ''
+  errors.password = ''
+
+  if (!form.email.trim()) {
+    errors.email = t('login.errors.emailRequired')
+  }
+  if (!form.password) {
+    errors.password = t('login.errors.passwordRequired')
+  }
+
+  return !errors.email && !errors.password
+}
+
+async function onSubmit() {
+  serverError.value = ''
+  if (!validate()) return
+
+  loading.value = true
+  try {
+    const email = form.email.trim()
+    const { token } = await loginParent(email, form.password)
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(base64)) as { user: number; email: string; profile: string }
+    authStore.setAuth(token, { id: payload.user, email: payload.email, profile: payload.profile }, form.rememberMe)
+    void router.replace('/dashboard')
+  } catch (err) {
+    if (err instanceof ApiRequestError) {
+      if (err.errCode === 3 || err.errCode === 12) {
+        serverError.value = t('login.errors.invalidCredentials')
+      } else {
+        serverError.value = t('login.errors.serverError')
+      }
+    } else {
+      serverError.value = t('login.errors.serverError')
+    }
+  } finally {
+    loading.value = false
+  }
+}
 </script>
