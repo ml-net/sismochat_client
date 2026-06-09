@@ -13,8 +13,15 @@
     "rememberMe": "Ricordami",
     "forgot": "Dimenticata?",
     "submit": "Accedi",
+    "submitting": "Accesso in corso...",
     "noAccount": "Non hai un account?",
-    "signUp": "Registrati"
+    "signUp": "Registrati",
+    "errors": {
+      "emailRequired": "L'email è obbligatoria",
+      "passwordRequired": "La password è obbligatoria",
+      "invalidCredentials": "Email o password non validi",
+      "serverError": "Qualcosa è andato storto. Riprova."
+    }
   },
   "register": {
     "title": "Registrazione",

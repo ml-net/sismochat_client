@@ -13,8 +13,15 @@
     "rememberMe": "Remember me",
     "forgot": "Forgot?",
     "submit": "Sign in",
+    "submitting": "Signing in...",
     "noAccount": "No account?",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "errors": {
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "invalidCredentials": "Invalid email or password",
+      "serverError": "Something went wrong. Please try again."
+    }
   },
   "register": {
     "title": "Register",
