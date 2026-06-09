@@ -77,6 +77,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 6.8 Step 2: empty OTP → inline validation error
 - [ ] 6.9 "Back to login" link works
 - [ ] 6.10 Login with new password after successful reset
+- [ ] 6.11 Rate limit (too many requests) → localized error message
 
 ## 7. Theming
 

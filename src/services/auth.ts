@@ -2,6 +2,7 @@ import { apiPost } from './api'
 
 export const ERR_EMAIL_TAKEN = 2
 export const ERR_INVALID_OTP = 5
+export const ERR_RATE_LIMIT = 15
 
 interface RegisterResponse {
   ID: number

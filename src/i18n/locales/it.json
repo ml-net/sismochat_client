@@ -70,7 +70,8 @@
       "tooManyAttempts": "Troppi tentativi. Richiedi un nuovo codice.",
       "passwordRequired": "La nuova password è obbligatoria",
       "passwordMin": "La password deve avere almeno 6 caratteri",
-      "serverError": "Qualcosa è andato storto. Riprova."
+      "serverError": "Qualcosa è andato storto. Riprova.",
+      "rateLimited": "Troppe richieste. Riprova più tardi."
     }
   },
   "changePassword": {

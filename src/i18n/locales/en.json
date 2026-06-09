@@ -70,7 +70,8 @@
       "tooManyAttempts": "Too many attempts. Please request a new code.",
       "passwordRequired": "New password is required",
       "passwordMin": "Password must be at least 6 characters",
-      "serverError": "Something went wrong. Please try again."
+      "serverError": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests. Please try again later."
     }
   },
   "changePassword": {

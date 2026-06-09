@@ -106,7 +106,7 @@ import { APP_NAME } from '../constants'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import AppInput from '../components/auth/AppInput.vue'
 import AppButton from '../components/auth/AppButton.vue'
-import { requestPasswordReset, resetPassword, ERR_INVALID_OTP } from '../services/auth'
+import { requestPasswordReset, resetPassword, ERR_INVALID_OTP, ERR_RATE_LIMIT } from '../services/auth'
 import { ApiRequestError } from '../services/api'
 
 const router = useRouter()
@@ -130,8 +130,12 @@ async function onRequestOtp() {
   try {
     await requestPasswordReset(form.email.trim())
     step.value = 2
-  } catch {
-    serverError.value = t('resetPassword.errors.serverError')
+  } catch (err) {
+    if (err instanceof ApiRequestError && err.errCode === ERR_RATE_LIMIT) {
+      serverError.value = t('resetPassword.errors.rateLimited')
+    } else {
+      serverError.value = t('resetPassword.errors.serverError')
+    }
   } finally {
     loading.value = false
   }
@@ -169,6 +173,8 @@ async function onResetPassword() {
       } else {
         serverError.value = t('resetPassword.errors.invalidOtp', { remaining })
       }
+    } else if (err instanceof ApiRequestError && err.errCode === ERR_RATE_LIMIT) {
+      serverError.value = t('resetPassword.errors.rateLimited')
     } else {
       serverError.value = t('resetPassword.errors.serverError')
     }
