@@ -106,7 +106,7 @@ import { APP_NAME } from '../constants'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import AppInput from '../components/auth/AppInput.vue'
 import AppButton from '../components/auth/AppButton.vue'
-import { requestPasswordReset, resetPassword } from '../services/auth'
+import { requestPasswordReset, resetPassword, ERR_INVALID_OTP } from '../services/auth'
 import { ApiRequestError } from '../services/api'
 
 const router = useRouter()
@@ -144,7 +144,7 @@ async function onResetPassword() {
 
   if (!form.otp.trim()) {
     errors.otp = t('resetPassword.errors.otpRequired')
-  } else if (form.otp.trim().length !== 6) {
+  } else if (!/^\d{6}$/.test(form.otp.trim())) {
     errors.otp = t('resetPassword.errors.otpLength')
   }
   if (!form.newPassword) {
@@ -159,7 +159,7 @@ async function onResetPassword() {
     await resetPassword(form.email.trim(), form.otp.trim(), form.newPassword)
     void router.push({ name: 'login', query: { reset: '1' } })
   } catch (err) {
-    if (err instanceof ApiRequestError && err.errCode === 5) {
+    if (err instanceof ApiRequestError && err.errCode === ERR_INVALID_OTP) {
       serverError.value = err.errDesc
     } else {
       serverError.value = t('resetPassword.errors.serverError')
