@@ -85,6 +85,15 @@
       >
         {{ t('resetPassword.resetButton') }}
       </AppButton>
+
+      <button
+        v-if="showRequestNewCode"
+        type="button"
+        class="w-full text-center text-sm text-secondary-light hover:text-secondary transition-colors"
+        @click="onRequestNew"
+      >
+        {{ t('resetPassword.requestNewCode') }}
+      </button>
     </form>
 
     <p class="text-center text-gray-500 text-sm mt-6">
@@ -117,6 +126,17 @@ const form = reactive({ email: '', otp: '', newPassword: '' })
 const errors = reactive({ email: '', otp: '', newPassword: '' })
 const serverError = ref('')
 const loading = ref(false)
+const showRequestNewCode = ref(false)
+
+function onRequestNew() {
+  form.otp = ''
+  form.newPassword = ''
+  errors.otp = ''
+  errors.newPassword = ''
+  serverError.value = ''
+  showRequestNewCode.value = false
+  step.value = 1
+}
 
 async function onRequestOtp() {
   errors.email = ''
@@ -168,8 +188,10 @@ async function onResetPassword() {
       const remaining = (err.remaining as number) ?? 0
       if (reason === 'expired') {
         serverError.value = t('resetPassword.errors.otpExpired')
+        showRequestNewCode.value = true
       } else if (reason === 'too_many') {
         serverError.value = t('resetPassword.errors.tooManyAttempts')
+        showRequestNewCode.value = true
       } else {
         serverError.value = t('resetPassword.errors.invalidOtp', { remaining })
       }

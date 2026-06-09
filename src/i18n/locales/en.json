@@ -11,7 +11,7 @@
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Remember me",
-    "forgot": "Forgot?",
+    "forgot": "Forgot password?",
     "submit": "Sign in",
     "submitting": "Signing in...",
     "noAccount": "No account?",
@@ -59,6 +59,7 @@
     "newPassword": "New password",
     "passwordPlaceholder": "••••••••",
     "resetButton": "Reset password",
+    "requestNewCode": "Request a new code",
     "resetting": "Resetting...",
     "backToLogin": "Back to login",
     "errors": {

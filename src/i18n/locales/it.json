@@ -11,7 +11,7 @@
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Ricordami",
-    "forgot": "Dimenticata?",
+    "forgot": "Password dimenticata?",
     "submit": "Accedi",
     "submitting": "Accesso in corso...",
     "noAccount": "Non hai un account?",
@@ -59,6 +59,7 @@
     "newPassword": "Nuova password",
     "passwordPlaceholder": "••••••••",
     "resetButton": "Reimposta password",
+    "requestNewCode": "Richiedi un nuovo codice",
     "resetting": "Reimpostazione...",
     "backToLogin": "Torna al login",
     "errors": {
