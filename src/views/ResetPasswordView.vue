@@ -160,7 +160,7 @@ async function onResetPassword() {
     void router.push({ name: 'login', query: { reset: '1' } })
   } catch (err) {
     if (err instanceof ApiRequestError && err.errCode === ERR_INVALID_OTP) {
-      serverError.value = t('resetPassword.errors.invalidOtp')
+      serverError.value = err.errDesc
     } else {
       serverError.value = t('resetPassword.errors.serverError')
     }
