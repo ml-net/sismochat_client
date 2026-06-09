@@ -118,8 +118,10 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    const { token } = await loginParent(form.email, form.password)
-    authStore.setAuth(token, { id: 0, email: form.email, profile: 'Parent' }, form.rememberMe)
+    const email = form.email.trim()
+    const { token } = await loginParent(email, form.password)
+    const payload = JSON.parse(atob(token.split('.')[1])) as { user: number; email: string; profile: string }
+    authStore.setAuth(token, { id: payload.user, email: payload.email, profile: payload.profile }, form.rememberMe)
     void router.replace('/dashboard')
   } catch (err) {
     if (err instanceof ApiRequestError) {

@@ -26,7 +26,10 @@ export const useAuthStore = defineStore('auth', () => {
       } catch {
         localStorage.removeItem(STORAGE_KEY)
         sessionStorage.removeItem(STORAGE_KEY)
+        localStorage.removeItem(PROFILE_KEY)
       }
+    } else {
+      localStorage.removeItem(PROFILE_KEY)
     }
   }
 
