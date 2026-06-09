@@ -79,14 +79,26 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 6.10 Login with new password after successful reset
 - [ ] 6.11 Rate limit (too many requests) → localized error message
 
-## 7. Theming
+## 7. Change Password
+
+- [ ] 7.1 Change password with valid old + new → success message
+- [ ] 7.2 Empty old password → inline error
+- [ ] 7.3 New password < 6 chars → inline error
+- [ ] 7.4 New password = old password → inline error
+- [ ] 7.5 Confirm doesn't match → inline error
+- [ ] 7.6 Wrong old password → API error displayed
+- [ ] 7.7 Server unreachable → generic error message
+- [ ] 7.8 "Back to dashboard" link works
+- [ ] 7.9 Login with new password after change
+
+## 8. Theming
 
 - [ ] 4.1 Default Emerald theme applied (green accents, blue secondary)
 - [ ] 4.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
 - [ ] 4.3 Glow effects visible on card border and button
 - [ ] 4.4 Background blobs animate (pulse)
 
-## 8. Internationalization
+## 9. Internationalization
 
 - [ ] 5.1 English locale loads (browser language = en)
 - [ ] 5.2 Italian locale loads (browser language = it)
@@ -94,7 +106,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 5.4 Email placeholder renders correctly (no `@` parsing error)
 - [ ] 5.5 Fallback to English for unsupported browser languages
 
-## 9. Routing
+## 10. Routing
 
 - [ ] 6.1 `/` → splash
 - [ ] 6.2 `/login` → login page (immediately, no lazy-load delay)
@@ -106,7 +118,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 6.8 `/nonexistent` → 404 page
 - [ ] 6.9 Browser back/forward navigation works
 
-## 10. Build & Deploy
+## 11. Build & Deploy
 
 - [ ] 7.1 No console errors on any page
 - [ ] 7.2 No console warnings (except expected deprecations)

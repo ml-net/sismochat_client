@@ -77,7 +77,25 @@
   },
   "changePassword": {
     "title": "Change password",
-    "subtitle": "Choose a new password"
+    "subtitle": "Choose a new password",
+    "oldPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordPlaceholder": "••••••••",
+    "submit": "Change password",
+    "submitting": "Changing...",
+    "success": "Password changed successfully!",
+    "backToDashboard": "Back to dashboard",
+    "errors": {
+      "oldRequired": "Current password is required",
+      "newRequired": "New password is required",
+      "newMin": "Password must be at least 6 characters",
+      "samePwd": "New password must differ from current",
+      "confirmRequired": "Please confirm your new password",
+      "mismatch": "Passwords do not match",
+      "wrongOld": "Current password is incorrect",
+      "serverError": "Something went wrong. Please try again."
+    }
   },
   "dashboard": {
     "title": "Dashboard"
