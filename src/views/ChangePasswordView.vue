@@ -87,10 +87,8 @@ import AppInput from '../components/auth/AppInput.vue'
 import AppButton from '../components/auth/AppButton.vue'
 import { changePassword, ERR_WRONG_PASSWORD } from '../services/auth'
 import { ApiRequestError } from '../services/api'
-import { useAuthStore } from '../stores/auth'
 
 const { t } = useI18n()
-const authStore = useAuthStore()
 
 const form = reactive({ oldPassword: '', newPassword: '', confirmPassword: '' })
 const errors = reactive({ oldPassword: '', newPassword: '', confirmPassword: '' })
@@ -128,13 +126,11 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    await changePassword(form.oldPassword, form.newPassword, authStore.token!)
+    await changePassword(form.oldPassword, form.newPassword)
     success.value = true
   } catch (err) {
     if (err instanceof ApiRequestError && err.errCode === ERR_WRONG_PASSWORD) {
       serverError.value = t('changePassword.errors.wrongOld')
-    } else if (err instanceof ApiRequestError) {
-      serverError.value = err.errDesc
     } else {
       serverError.value = t('changePassword.errors.serverError')
     }

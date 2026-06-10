@@ -1,3 +1,6 @@
+import { useAuthStore } from '../stores/auth'
+import router from '../router'
+
 const API_BASE: string = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000'
 
 export interface ApiError {
@@ -17,12 +20,13 @@ export class ApiRequestError extends Error implements ApiError {
   }
 }
 
-export async function apiPost<T>(path: string, body: Record<string, unknown>): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
+async function handleResponse<T>(res: Response): Promise<T> {
+  if (res.status === 401) {
+    const authStore = useAuthStore()
+    authStore.clearAuth()
+    void router.replace({ name: 'login' })
+    throw new ApiRequestError(401, 'Session expired')
+  }
   if (res.status === 204) return undefined as T
   const contentType = res.headers.get('content-type') || ''
   if (!contentType.includes('application/json')) {
@@ -46,26 +50,29 @@ export async function apiPost<T>(path: string, body: Record<string, unknown>): P
   return data as T
 }
 
-export async function apiPatch<T>(path: string, body: Record<string, unknown>, token: string): Promise<T> {
+function getAuthHeaders(): Record<string, string> {
+  const authStore = useAuthStore()
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  if (authStore.token) {
+    headers.Authorization = `Bearer ${authStore.token}`
+  }
+  return headers
+}
+
+export async function apiPost<T>(path: string, body: Record<string, unknown>): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    method: 'POST',
+    headers: getAuthHeaders(),
     body: JSON.stringify(body),
   })
-  if (res.status === 204) return undefined as T
-  const contentType = res.headers.get('content-type') || ''
-  if (!contentType.includes('application/json')) {
-    throw new ApiRequestError(-1, 'Unexpected response from server')
-  }
-  let data: unknown
-  try {
-    data = await res.json()
-  } catch {
-    throw new ApiRequestError(-1, 'Invalid response from server')
-  }
-  if (!res.ok) {
-    const err = data as ApiError
-    throw new ApiRequestError(err.errCode, err.errDesc)
-  }
-  return data as T
+  return handleResponse<T>(res)
+}
+
+export async function apiPatch<T>(path: string, body: Record<string, unknown>): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'PATCH',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(body),
+  })
+  return handleResponse<T>(res)
 }
