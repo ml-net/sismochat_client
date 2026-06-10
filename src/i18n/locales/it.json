@@ -98,7 +98,9 @@
     }
   },
   "dashboard": {
-    "title": "Pannello"
+    "title": "Pannello",
+    "logout": "Esci",
+    "placeholder": "Contenuto in arrivo."
   },
   "chat": {
     "title": "Chat",
