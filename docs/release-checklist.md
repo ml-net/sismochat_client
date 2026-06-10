@@ -99,14 +99,25 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 8.4 After logout: navigating to /dashboard redirects to login (requires route guards, #46)
 - [ ] 8.5 After logout: refresh stays on login
 
-## 9. Theming
+## 9. Route Guards
+
+- [ ] 9.1 Unauthenticated: /dashboard → redirected to /login
+- [ ] 9.2 Unauthenticated: /chat → redirected to /login
+- [ ] 9.3 Unauthenticated: /change-password → redirected to /login
+- [ ] 9.4 Authenticated: /login → redirected to /dashboard
+- [ ] 9.5 Authenticated: /register → redirected to /dashboard
+- [ ] 9.6 Authenticated: /reset-password → redirected to /dashboard
+- [ ] 9.7 Expired JWT on API call → auto-logout + redirect to /login
+- [ ] 9.8 Session rehydration: reload with valid token → stays authenticated
+
+## 10. Theming
 
 - [ ] 9.1 Default Emerald theme applied (green accents, blue secondary)
 - [ ] 9.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
 - [ ] 9.3 Glow effects visible on card border and button
 - [ ] 9.4 Background blobs animate (pulse)
 
-## 10. Internationalization
+## 11. Internationalization
 
 - [ ] 10.1 English locale loads (browser language = en)
 - [ ] 10.2 Italian locale loads (browser language = it)
@@ -114,7 +125,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 10.4 Email placeholder renders correctly (no `@` parsing error)
 - [ ] 10.5 Fallback to English for unsupported browser languages
 
-## 11. Routing
+## 12. Routing
 
 - [ ] 11.1 `/` → splash
 - [ ] 11.2 `/login` → login page (immediately, no lazy-load delay)
@@ -126,7 +137,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 11.8 `/nonexistent` → 404 page
 - [ ] 11.9 Browser back/forward navigation works
 
-## 12. Build & Deploy
+## 13. Build & Deploy
 
 - [ ] 12.1 No console errors on any page
 - [ ] 12.2 No console warnings (except expected deprecations)

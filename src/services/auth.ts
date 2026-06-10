@@ -30,6 +30,6 @@ export function resetPassword(email: string, otp: string, newPassword: string): 
   return apiPost<void>('/api/v1/parent/reset', { email, otp, newPassword })
 }
 
-export function changePassword(oldPassword: string, newPassword: string, token: string): Promise<unknown> {
-  return apiPatch<unknown>('/api/v1/parent/password', { oldPassword, newPassword }, token)
+export function changePassword(oldPassword: string, newPassword: string): Promise<unknown> {
+  return apiPatch<unknown>('/api/v1/parent/password', { oldPassword, newPassword })
 }
