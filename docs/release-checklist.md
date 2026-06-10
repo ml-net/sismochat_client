@@ -96,40 +96,40 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 8.1 Logout button visible on dashboard
 - [ ] 8.2 Click logout → redirected to login
 - [ ] 8.3 After logout: localStorage cleared (no auth token, no profile)
-- [ ] 8.4 After logout: navigating to /dashboard redirects to login (via splash)
+- [ ] 8.4 After logout: navigating to /dashboard redirects to login (requires route guards, #46)
 - [ ] 8.5 After logout: refresh stays on login
 
 ## 9. Theming
 
-- [ ] 4.1 Default Emerald theme applied (green accents, blue secondary)
-- [ ] 4.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
-- [ ] 4.3 Glow effects visible on card border and button
-- [ ] 4.4 Background blobs animate (pulse)
+- [ ] 9.1 Default Emerald theme applied (green accents, blue secondary)
+- [ ] 9.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
+- [ ] 9.3 Glow effects visible on card border and button
+- [ ] 9.4 Background blobs animate (pulse)
 
 ## 10. Internationalization
 
-- [ ] 5.1 English locale loads (browser language = en)
-- [ ] 5.2 Italian locale loads (browser language = it)
-- [ ] 5.3 All visible text on login page is localized (no raw keys shown)
-- [ ] 5.4 Email placeholder renders correctly (no `@` parsing error)
-- [ ] 5.5 Fallback to English for unsupported browser languages
+- [ ] 10.1 English locale loads (browser language = en)
+- [ ] 10.2 Italian locale loads (browser language = it)
+- [ ] 10.3 All visible text on login page is localized (no raw keys shown)
+- [ ] 10.4 Email placeholder renders correctly (no `@` parsing error)
+- [ ] 10.5 Fallback to English for unsupported browser languages
 
 ## 11. Routing
 
-- [ ] 6.1 `/` → splash
-- [ ] 6.2 `/login` → login page (immediately, no lazy-load delay)
-- [ ] 6.3 `/register` → register page
-- [ ] 6.4 `/reset-password` → reset password page
-- [ ] 6.5 `/change-password` → change password page
-- [ ] 6.6 `/dashboard` → dashboard placeholder
-- [ ] 6.7 `/chat` → chat placeholder
-- [ ] 6.8 `/nonexistent` → 404 page
-- [ ] 6.9 Browser back/forward navigation works
+- [ ] 11.1 `/` → splash
+- [ ] 11.2 `/login` → login page (immediately, no lazy-load delay)
+- [ ] 11.3 `/register` → register page
+- [ ] 11.4 `/reset-password` → reset password page
+- [ ] 11.5 `/change-password` → change password page
+- [ ] 11.6 `/dashboard` → dashboard placeholder
+- [ ] 11.7 `/chat` → chat placeholder
+- [ ] 11.8 `/nonexistent` → 404 page
+- [ ] 11.9 Browser back/forward navigation works
 
 ## 12. Build & Deploy
 
-- [ ] 7.1 No console errors on any page
-- [ ] 7.2 No console warnings (except expected deprecations)
-- [ ] 7.3 Lighthouse PWA score ≥ 90
-- [ ] 7.4 All assets load (no 404s in network tab)
-- [ ] 7.5 HTTPS enforced on production URL
+- [ ] 12.1 No console errors on any page
+- [ ] 12.2 No console warnings (except expected deprecations)
+- [ ] 12.3 Lighthouse PWA score ≥ 90
+- [ ] 12.4 All assets load (no 404s in network tab)
+- [ ] 12.5 HTTPS enforced on production URL
