@@ -11,7 +11,7 @@
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Remember me",
-    "forgot": "Forgot?",
+    "forgot": "Forgot password?",
     "submit": "Sign in",
     "submitting": "Signing in...",
     "noAccount": "No account?",
@@ -48,7 +48,32 @@
   },
   "resetPassword": {
     "title": "Reset password",
-    "subtitle": "Reset your password"
+    "subtitle": "Reset your password",
+    "email": "Email",
+    "emailPlaceholder": "you{'@'}example.com",
+    "sendCode": "Send reset code",
+    "sending": "Sending...",
+    "codeSent": "A 6-digit code has been sent to your email. Check your spam folder.",
+    "otp": "Reset code",
+    "otpPlaceholder": "123456",
+    "newPassword": "New password",
+    "passwordPlaceholder": "••••••••",
+    "resetButton": "Reset password",
+    "requestNewCode": "Request a new code",
+    "resetting": "Resetting...",
+    "backToLogin": "Back to login",
+    "errors": {
+      "emailRequired": "Email is required",
+      "otpRequired": "Reset code is required",
+      "otpLength": "Code must be 6 digits",
+      "invalidOtp": "Invalid code. {remaining} attempts remaining.",
+      "otpExpired": "Code expired. Please request a new one.",
+      "tooManyAttempts": "Too many attempts. Please request a new code.",
+      "passwordRequired": "New password is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "serverError": "Something went wrong. Please try again.",
+      "rateLimited": "Too many requests. Please try again later."
+    }
   },
   "changePassword": {
     "title": "Change password",

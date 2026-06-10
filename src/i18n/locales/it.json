@@ -11,7 +11,7 @@
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "rememberMe": "Ricordami",
-    "forgot": "Dimenticata?",
+    "forgot": "Password dimenticata?",
     "submit": "Accedi",
     "submitting": "Accesso in corso...",
     "noAccount": "Non hai un account?",
@@ -48,7 +48,32 @@
   },
   "resetPassword": {
     "title": "Reimposta password",
-    "subtitle": "Reimposta la tua password"
+    "subtitle": "Reimposta la tua password",
+    "email": "Email",
+    "emailPlaceholder": "tu{'@'}esempio.com",
+    "sendCode": "Invia codice",
+    "sending": "Invio...",
+    "codeSent": "Un codice a 6 cifre è stato inviato alla tua email. Controlla lo spam.",
+    "otp": "Codice di reset",
+    "otpPlaceholder": "123456",
+    "newPassword": "Nuova password",
+    "passwordPlaceholder": "••••••••",
+    "resetButton": "Reimposta password",
+    "requestNewCode": "Richiedi un nuovo codice",
+    "resetting": "Reimpostazione...",
+    "backToLogin": "Torna al login",
+    "errors": {
+      "emailRequired": "L'email è obbligatoria",
+      "otpRequired": "Il codice è obbligatorio",
+      "otpLength": "Il codice deve essere di 6 cifre",
+      "invalidOtp": "Codice non valido. {remaining} tentativi rimasti.",
+      "otpExpired": "Codice scaduto. Richiedine uno nuovo.",
+      "tooManyAttempts": "Troppi tentativi. Richiedi un nuovo codice.",
+      "passwordRequired": "La nuova password è obbligatoria",
+      "passwordMin": "La password deve avere almeno 6 caratteri",
+      "serverError": "Qualcosa è andato storto. Riprova.",
+      "rateLimited": "Troppe richieste. Riprova più tardi."
+    }
   },
   "changePassword": {
     "title": "Cambia password",
