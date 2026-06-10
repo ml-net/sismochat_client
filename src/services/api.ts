@@ -24,7 +24,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
   if (res.status === 401) {
     const authStore = useAuthStore()
     authStore.clearAuth()
-    void router.replace('/login')
+    void router.replace({ name: 'login' })
     throw new ApiRequestError(401, 'Session expired')
   }
   if (res.status === 204) return undefined as T

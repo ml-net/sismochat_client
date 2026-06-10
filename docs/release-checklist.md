@@ -112,18 +112,18 @@ Use this checklist after every deploy to verify no regressions.
 
 ## 10. Theming
 
-- [ ] 9.1 Default Emerald theme applied (green accents, blue secondary)
-- [ ] 9.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
-- [ ] 9.3 Glow effects visible on card border and button
-- [ ] 9.4 Background blobs animate (pulse)
+- [ ] 10.1 Default Emerald theme applied (green accents, blue secondary)
+- [ ] 10.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
+- [ ] 10.3 Glow effects visible on card border and button
+- [ ] 10.4 Background blobs animate (pulse)
 
 ## 11. Internationalization
 
-- [ ] 10.1 English locale loads (browser language = en)
-- [ ] 10.2 Italian locale loads (browser language = it)
-- [ ] 10.3 All visible text on login page is localized (no raw keys shown)
-- [ ] 10.4 Email placeholder renders correctly (no `@` parsing error)
-- [ ] 10.5 Fallback to English for unsupported browser languages
+- [ ] 11.1 English locale loads (browser language = en)
+- [ ] 11.2 Italian locale loads (browser language = it)
+- [ ] 11.3 All visible text on login page is localized (no raw keys shown)
+- [ ] 11.4 Email placeholder renders correctly (no `@` parsing error)
+- [ ] 11.5 Fallback to English for unsupported browser languages
 
 ## 12. Routing
 
