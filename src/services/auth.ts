@@ -1,8 +1,9 @@
-import { apiPost } from './api'
+import { apiPost, apiPatch } from './api'
 
 export const ERR_EMAIL_TAKEN = 2
 export const ERR_INVALID_OTP = 5
 export const ERR_RATE_LIMIT = 15
+export const ERR_WRONG_PASSWORD = 12
 
 interface RegisterResponse {
   ID: number
@@ -27,4 +28,8 @@ export function requestPasswordReset(email: string): Promise<{ msg: string }> {
 
 export function resetPassword(email: string, otp: string, newPassword: string): Promise<void> {
   return apiPost<void>('/api/v1/parent/reset', { email, otp, newPassword })
+}
+
+export function changePassword(oldPassword: string, newPassword: string, token: string): Promise<unknown> {
+  return apiPatch<unknown>('/api/v1/parent/password', { oldPassword, newPassword }, token)
 }

@@ -45,3 +45,27 @@ export async function apiPost<T>(path: string, body: Record<string, unknown>): P
   }
   return data as T
 }
+
+export async function apiPatch<T>(path: string, body: Record<string, unknown>, token: string): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify(body),
+  })
+  if (res.status === 204) return undefined as T
+  const contentType = res.headers.get('content-type') || ''
+  if (!contentType.includes('application/json')) {
+    throw new ApiRequestError(-1, 'Unexpected response from server')
+  }
+  let data: unknown
+  try {
+    data = await res.json()
+  } catch {
+    throw new ApiRequestError(-1, 'Invalid response from server')
+  }
+  if (!res.ok) {
+    const err = data as ApiError
+    throw new ApiRequestError(err.errCode, err.errDesc)
+  }
+  return data as T
+}
