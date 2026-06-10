@@ -91,14 +91,22 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 7.8 "Back to dashboard" link works
 - [ ] 7.9 Login with new password after change
 
-## 8. Theming
+## 8. Logout
+
+- [ ] 8.1 Logout button visible on dashboard
+- [ ] 8.2 Click logout → redirected to login
+- [ ] 8.3 After logout: localStorage cleared (no auth token, no profile)
+- [ ] 8.4 After logout: navigating to /dashboard redirects to login (via splash)
+- [ ] 8.5 After logout: refresh stays on login
+
+## 9. Theming
 
 - [ ] 4.1 Default Emerald theme applied (green accents, blue secondary)
 - [ ] 4.2 No CSS conflicts between PrimeVue and Tailwind (utilities apply correctly)
 - [ ] 4.3 Glow effects visible on card border and button
 - [ ] 4.4 Background blobs animate (pulse)
 
-## 9. Internationalization
+## 10. Internationalization
 
 - [ ] 5.1 English locale loads (browser language = en)
 - [ ] 5.2 Italian locale loads (browser language = it)
@@ -106,7 +114,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 5.4 Email placeholder renders correctly (no `@` parsing error)
 - [ ] 5.5 Fallback to English for unsupported browser languages
 
-## 10. Routing
+## 11. Routing
 
 - [ ] 6.1 `/` → splash
 - [ ] 6.2 `/login` → login page (immediately, no lazy-load delay)
@@ -118,7 +126,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 6.8 `/nonexistent` → 404 page
 - [ ] 6.9 Browser back/forward navigation works
 
-## 11. Build & Deploy
+## 12. Build & Deploy
 
 - [ ] 7.1 No console errors on any page
 - [ ] 7.2 No console warnings (except expected deprecations)

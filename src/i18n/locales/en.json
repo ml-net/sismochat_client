@@ -98,7 +98,9 @@
     }
   },
   "dashboard": {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "logout": "Logout",
+    "placeholder": "Dashboard content coming soon."
   },
   "chat": {
     "title": "Chat",
