@@ -98,9 +98,30 @@
     }
   },
   "dashboard": {
-    "title": "Pannello",
-    "logout": "Esci",
-    "placeholder": "Contenuto in arrivo."
+    "nav": {
+      "home": "Home",
+      "children": "Figli",
+      "connections": "Connessioni",
+      "settings": "Impostazioni",
+      "chat": "Chat",
+      "logout": "Esci"
+    },
+    "home": {
+      "title": "Home",
+      "welcome": "Benvenuto nella tua dashboard."
+    },
+    "children": {
+      "title": "Figli",
+      "placeholder": "Gestione figli in arrivo."
+    },
+    "connections": {
+      "title": "Connessioni",
+      "placeholder": "Gestione connessioni in arrivo."
+    },
+    "settings": {
+      "title": "Impostazioni",
+      "placeholder": "Impostazioni in arrivo."
+    }
   },
   "chat": {
     "title": "Chat",
