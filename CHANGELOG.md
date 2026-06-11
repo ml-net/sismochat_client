@@ -25,7 +25,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Centralized auth header attachment in API helpers (#46)
 - Auto-logout on 401 API responses with redirect to login (#46)
 - i18n translations for all auth flows (English + Italian)
-- Release verification checklist
+- Release verification checklist (manual QA steps in docs/release-checklist.md)
 
 ### Changed
 
@@ -49,3 +49,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Render static site deployment (tag-triggered)
 - Vitest build-output tests (PWA manifest, icons, SW, offline, fallback)
 - AGPL-3.0 license
+
+[v0.2.0]: https://github.com/ml-net/sismochat_client/compare/v0.1.0...v0.2.0
+[v0.1.0]: https://github.com/ml-net/sismochat_client/releases/tag/v0.1.0
+
