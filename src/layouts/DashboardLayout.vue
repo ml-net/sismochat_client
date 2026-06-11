@@ -10,7 +10,7 @@
       <nav class="flex-1 p-4 space-y-1">
         <SidebarLink
           v-for="item in navItems"
-          :key="item.name"
+          :key="item.to.name"
           :to="item.to"
           :icon="item.icon"
           :label="t(item.labelKey)"
@@ -54,10 +54,10 @@
       <nav class="md:hidden flex border-t border-[var(--theme-surface-border)] bg-[var(--theme-surface)]">
         <router-link
           v-for="item in navItems"
-          :key="item.name"
+          :key="item.to.name"
           :to="item.to"
           class="flex-1 flex flex-col items-center py-3 text-xs transition-colors"
-          :class="$route.name === item.name ? 'text-[var(--theme-primary)]' : 'text-gray-400 hover:text-gray-200'"
+          :class="$route.name === item.to.name ? 'text-[var(--theme-primary)]' : 'text-gray-400 hover:text-gray-200'"
         >
           <span class="text-lg">{{ item.icon }}</span>
           <span class="mt-1">{{ t(item.labelKey) }}</span>
@@ -87,10 +87,10 @@ const { t } = useI18n()
 const authStore = useAuthStore()
 
 const navItems = [
-  { name: 'dashboard-home', to: { name: 'dashboard-home' }, icon: '🏠', labelKey: 'dashboard.nav.home' },
-  { name: 'dashboard-children', to: { name: 'dashboard-children' }, icon: '👶', labelKey: 'dashboard.nav.children' },
-  { name: 'dashboard-connections', to: { name: 'dashboard-connections' }, icon: '🔗', labelKey: 'dashboard.nav.connections' },
-  { name: 'dashboard-settings', to: { name: 'dashboard-settings' }, icon: '⚙️', labelKey: 'dashboard.nav.settings' },
+  { to: { name: 'dashboard-home' }, icon: '🏠', labelKey: 'dashboard.nav.home' },
+  { to: { name: 'dashboard-children' }, icon: '👶', labelKey: 'dashboard.nav.children' },
+  { to: { name: 'dashboard-connections' }, icon: '🔗', labelKey: 'dashboard.nav.connections' },
+  { to: { name: 'dashboard-settings' }, icon: '⚙️', labelKey: 'dashboard.nav.settings' },
 ]
 
 function onLogout() {
