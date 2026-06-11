@@ -98,9 +98,30 @@
     }
   },
   "dashboard": {
-    "title": "Dashboard",
-    "logout": "Logout",
-    "placeholder": "Dashboard content coming soon."
+    "nav": {
+      "home": "Home",
+      "children": "Children",
+      "connections": "Connections",
+      "settings": "Settings",
+      "chat": "Chat",
+      "logout": "Logout"
+    },
+    "home": {
+      "title": "Home",
+      "welcome": "Welcome to your dashboard."
+    },
+    "children": {
+      "title": "Children",
+      "placeholder": "Child management coming soon."
+    },
+    "connections": {
+      "title": "Connections",
+      "placeholder": "Connection management coming soon."
+    },
+    "settings": {
+      "title": "Settings",
+      "placeholder": "Settings coming soon."
+    }
   },
   "chat": {
     "title": "Chat",

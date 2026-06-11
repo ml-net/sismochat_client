@@ -42,7 +42,7 @@ onMounted(() => {
       if (profile) {
         const parsed = JSON.parse(profile) as { role?: string }
         if (parsed.role === '__parent__') {
-          void router.replace('/dashboard')
+          void router.replace({ name: 'dashboard-home' })
         } else {
           void router.replace('/chat')
         }
