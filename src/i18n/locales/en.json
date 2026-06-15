@@ -116,7 +116,11 @@
       "empty": "No children added yet.",
       "nickPlaceholder": "Nickname",
       "add": "Add",
-      "addError": "Could not add child. Please try again."
+      "addError": "Could not add child. Please try again.",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "editError": "Could not update nickname. Please try again."
     },
     "connections": {
       "title": "Connections",

@@ -116,7 +116,11 @@
       "empty": "Nessun figlio aggiunto.",
       "nickPlaceholder": "Soprannome",
       "add": "Aggiungi",
-      "addError": "Impossibile aggiungere il figlio. Riprova."
+      "addError": "Impossibile aggiungere il figlio. Riprova.",
+      "edit": "Modifica",
+      "save": "Salva",
+      "cancel": "Annulla",
+      "editError": "Impossibile aggiornare il soprannome. Riprova."
     },
     "connections": {
       "title": "Connessioni",
