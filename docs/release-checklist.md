@@ -147,13 +147,22 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 13.5 Home view shows welcome message
 - [ ] 13.6 Responsive: sidebar collapses on mobile
 
-## 14. Children List
+## 14. Children Management
 
 - [ ] 14.1 `/dashboard/children` shows loading state initially
 - [ ] 14.2 Children fetched from API and displayed as list
 - [ ] 14.3 Empty state shown when no children exist
-- [ ] 14.4 Each child shows nickname
-- [ ] 14.5 API error handled gracefully (no crash)
+- [ ] 14.4 Each child shows nickname with edit and delete buttons
+- [ ] 14.5 Add child: enter nickname + submit → child appears in list
+- [ ] 14.6 Add child: empty nickname → button disabled
+- [ ] 14.7 Add child: API error → error message shown
+- [ ] 14.8 Edit child: click edit → inline input with save/cancel
+- [ ] 14.9 Edit child: save → nickname updated in list
+- [ ] 14.10 Edit child: Escape or cancel → reverts without saving
+- [ ] 14.11 Delete child: click delete → confirmation dialog
+- [ ] 14.12 Delete child: confirm → child removed from list
+- [ ] 14.13 Delete child: cancel → nothing happens
+- [ ] 14.14 API error on any action handled gracefully (no crash)
 
 ## 15. Build & Deploy
 

@@ -120,7 +120,10 @@
       "edit": "Edit",
       "save": "Save",
       "cancel": "Cancel",
-      "editError": "Could not update nickname. Please try again."
+      "editError": "Could not update nickname. Please try again.",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete {name}? This cannot be undone.",
+      "deleteError": "Could not delete child. Please try again."
     },
     "connections": {
       "title": "Connections",

@@ -120,7 +120,10 @@
       "edit": "Modifica",
       "save": "Salva",
       "cancel": "Annulla",
-      "editError": "Impossibile aggiornare il soprannome. Riprova."
+      "editError": "Impossibile aggiornare il soprannome. Riprova.",
+      "delete": "Elimina",
+      "deleteConfirm": "Sei sicuro di voler eliminare {name}? L'operazione non può essere annullata.",
+      "deleteError": "Impossibile eliminare il figlio. Riprova."
     },
     "connections": {
       "title": "Connessioni",

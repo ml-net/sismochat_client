@@ -83,23 +83,62 @@
         </template>
         <template v-else>
           <span class="text-white">{{ child.nick }}</span>
-          <button
-            type="button"
-            class="text-gray-400 hover:text-white text-sm"
-            @click="startEdit(child)"
-          >
-            {{ t('dashboard.children.edit') }}
-          </button>
+          <div class="flex gap-2">
+            <button
+              type="button"
+              class="text-gray-400 hover:text-white text-sm"
+              @click="startEdit(child)"
+            >
+              {{ t('dashboard.children.edit') }}
+            </button>
+            <button
+              type="button"
+              class="text-gray-400 hover:text-red-400 text-sm"
+              @click="confirmDelete(child)"
+            >
+              {{ t('dashboard.children.delete') }}
+            </button>
+          </div>
         </template>
       </li>
     </ul>
+
+    <!-- Delete confirmation dialog -->
+    <div
+      v-if="deletingChild"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      @click.self="cancelDelete"
+    >
+      <div class="bg-gray-800 rounded-xl p-6 max-w-sm w-full mx-4 shadow-lg">
+        <p class="text-white mb-4">
+          {{ t('dashboard.children.deleteConfirm', { name: deletingChild.nick }) }}
+        </p>
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            class="px-4 py-2 rounded-lg bg-gray-700 text-gray-300"
+            @click="cancelDelete"
+          >
+            {{ t('dashboard.children.cancel') }}
+          </button>
+          <button
+            type="button"
+            :disabled="deleting"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white disabled:opacity-50"
+            @click="onDelete"
+          >
+            {{ t('dashboard.children.delete') }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { fetchChildren, createChild, updateChild, type Child } from '../../services/children'
+import { fetchChildren, createChild, updateChild, deleteChild, type Child } from '../../services/children'
 import { ApiRequestError } from '../../services/api'
 
 const { t } = useI18n()
@@ -111,6 +150,8 @@ const error = ref('')
 const editingId = ref<number | null>(null)
 const editNick = ref('')
 const saving = ref(false)
+const deletingChild = ref<Child | null>(null)
+const deleting = ref(false)
 
 async function loadChildren() {
   children.value = await fetchChildren()
@@ -163,6 +204,32 @@ async function onSaveEdit(id: number) {
       : t('dashboard.children.editError')
   } finally {
     saving.value = false
+  }
+}
+
+function confirmDelete(child: Child) {
+  deletingChild.value = child
+}
+
+function cancelDelete() {
+  deletingChild.value = null
+}
+
+async function onDelete() {
+  if (!deletingChild.value) return
+  error.value = ''
+  deleting.value = true
+  try {
+    await deleteChild(deletingChild.value.id)
+    deletingChild.value = null
+    await loadChildren()
+  } catch (e) {
+    error.value = e instanceof ApiRequestError
+      ? e.errDesc
+      : t('dashboard.children.deleteError')
+    deletingChild.value = null
+  } finally {
+    deleting.value = false
   }
 }
 </script>
