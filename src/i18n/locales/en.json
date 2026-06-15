@@ -112,7 +112,8 @@
     },
     "children": {
       "title": "Children",
-      "placeholder": "Child management coming soon."
+      "loading": "Loading children…",
+      "empty": "No children added yet."
     },
     "connections": {
       "title": "Connections",

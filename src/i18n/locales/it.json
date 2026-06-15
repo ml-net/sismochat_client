@@ -112,7 +112,8 @@
     },
     "children": {
       "title": "Figli",
-      "placeholder": "Gestione figli in arrivo."
+      "loading": "Caricamento figli…",
+      "empty": "Nessun figlio aggiunto."
     },
     "connections": {
       "title": "Connessioni",
