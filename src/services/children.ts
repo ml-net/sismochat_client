@@ -1,4 +1,4 @@
-import { apiGet } from './api'
+import { apiGet, apiPost } from './api'
 import { useAuthStore } from '../stores/auth'
 
 export interface Child {
@@ -9,4 +9,8 @@ export interface Child {
 export function fetchChildren(): Promise<Child[]> {
   const { user } = useAuthStore()
   return apiGet<Child[]>(`/parents/${encodeURIComponent(user!.email)}/children`)
+}
+
+export function createChild(nick: string): Promise<{ ID: number }> {
+  return apiPost<{ ID: number }>('/users', { nick })
 }

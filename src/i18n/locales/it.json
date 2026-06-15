@@ -113,7 +113,10 @@
     "children": {
       "title": "Figli",
       "loading": "Caricamento figli…",
-      "empty": "Nessun figlio aggiunto."
+      "empty": "Nessun figlio aggiunto.",
+      "nickPlaceholder": "Soprannome",
+      "add": "Aggiungi",
+      "addError": "Impossibile aggiungere il figlio. Riprova."
     },
     "connections": {
       "title": "Connessioni",

@@ -127,20 +127,38 @@ Use this checklist after every deploy to verify no regressions.
 
 ## 12. Routing
 
-- [ ] 11.1 `/` → splash
-- [ ] 11.2 `/login` → login page (immediately, no lazy-load delay)
-- [ ] 11.3 `/register` → register page
-- [ ] 11.4 `/reset-password` → reset password page
-- [ ] 11.5 `/change-password` → change password page
-- [ ] 11.6 `/dashboard` → dashboard placeholder
-- [ ] 11.7 `/chat` → chat placeholder
-- [ ] 11.8 `/nonexistent` → 404 page
-- [ ] 11.9 Browser back/forward navigation works
+- [ ] 12.1 `/` → splash
+- [ ] 12.2 `/login` → login page (immediately, no lazy-load delay)
+- [ ] 12.3 `/register` → register page
+- [ ] 12.4 `/reset-password` → reset password page
+- [ ] 12.5 `/change-password` → change password page
+- [ ] 12.6 `/dashboard` → dashboard layout with nested routes
+- [ ] 12.7 `/dashboard/children` → children list
+- [ ] 12.8 `/chat` → chat placeholder
+- [ ] 12.9 `/nonexistent` → 404 page
+- [ ] 12.10 Browser back/forward navigation works
 
-## 13. Build & Deploy
+## 13. Dashboard Layout
 
-- [ ] 12.1 No console errors on any page
-- [ ] 12.2 No console warnings (except expected deprecations)
-- [ ] 12.3 Lighthouse PWA score ≥ 90
-- [ ] 12.4 All assets load (no 404s in network tab)
-- [ ] 12.5 HTTPS enforced on production URL
+- [ ] 13.1 `/dashboard` shows sidebar with navigation links
+- [ ] 13.2 Sidebar links: Home, Children, Connections, Settings, Chat, Logout
+- [ ] 13.3 Active link highlighted in sidebar
+- [ ] 13.4 Nested routing: clicking sidebar links changes content area
+- [ ] 13.5 Home view shows welcome message
+- [ ] 13.6 Responsive: sidebar collapses on mobile
+
+## 14. Children List
+
+- [ ] 14.1 `/dashboard/children` shows loading state initially
+- [ ] 14.2 Children fetched from API and displayed as list
+- [ ] 14.3 Empty state shown when no children exist
+- [ ] 14.4 Each child shows nickname
+- [ ] 14.5 API error handled gracefully (no crash)
+
+## 15. Build & Deploy
+
+- [ ] 15.1 No console errors on any page
+- [ ] 15.2 No console warnings (except expected deprecations)
+- [ ] 15.3 Lighthouse PWA score ≥ 90
+- [ ] 15.4 All assets load (no 404s in network tab)
+- [ ] 15.5 HTTPS enforced on production URL

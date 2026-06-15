@@ -113,7 +113,10 @@
     "children": {
       "title": "Children",
       "loading": "Loading children…",
-      "empty": "No children added yet."
+      "empty": "No children added yet.",
+      "nickPlaceholder": "Nickname",
+      "add": "Add",
+      "addError": "Could not add child. Please try again."
     },
     "connections": {
       "title": "Connections",
