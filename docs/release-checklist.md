@@ -162,7 +162,8 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 14.11 Delete child: click delete → confirmation dialog
 - [ ] 14.12 Delete child: confirm → child removed from list
 - [ ] 14.13 Delete child: cancel → nothing happens
-- [ ] 14.14 API error on any action handled gracefully (no crash)
+- [ ] 14.14 Rate limit (429) handled gracefully with message
+- [ ] 14.15 API error on any action handled gracefully (no crash)
 
 ## 15. Build & Deploy
 

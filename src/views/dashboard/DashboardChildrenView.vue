@@ -160,6 +160,10 @@ async function loadChildren() {
 onMounted(async () => {
   try {
     await loadChildren()
+  } catch (e) {
+    error.value = e instanceof ApiRequestError
+      ? e.errDesc
+      : t('dashboard.children.loadError')
   } finally {
     loading.value = false
   }

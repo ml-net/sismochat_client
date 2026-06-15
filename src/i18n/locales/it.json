@@ -113,6 +113,7 @@
     "children": {
       "title": "Figli",
       "loading": "Caricamento figli…",
+      "loadError": "Impossibile caricare i figli. Riprova più tardi.",
       "empty": "Nessun figlio aggiunto.",
       "nickPlaceholder": "Nome",
       "add": "Aggiungi",

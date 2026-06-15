@@ -113,6 +113,7 @@
     "children": {
       "title": "Children",
       "loading": "Loading children…",
+      "loadError": "Could not load children. Please try again later.",
       "empty": "No children added yet.",
       "nickPlaceholder": "Nickname",
       "add": "Add",
