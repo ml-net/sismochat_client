@@ -349,9 +349,9 @@ async function onRevoke() {
 function activateDevice() {
   if (!activatingChild.value) return
   const { nick: childNick, id, deviceId } = activatingChild.value
-  localStorage.setItem('sismochat_profile', JSON.stringify({ role: 'child', id, nick: childNick, deviceId }))
   activatingChild.value = null
   authStore.clearAuth()
+  localStorage.setItem('sismochat_profile', JSON.stringify({ role: 'child', id, nick: childNick, deviceId }))
   void router.replace({ name: 'splash' })
 }
 </script>
