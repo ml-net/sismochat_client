@@ -103,6 +103,35 @@
       </li>
     </ul>
 
+    <!-- Activate device dialog -->
+    <div
+      v-if="activatingChild"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      @click.self="dismissActivation"
+    >
+      <div class="bg-gray-800 rounded-xl p-6 max-w-sm w-full mx-4 shadow-lg">
+        <p class="text-white mb-4">
+          {{ t('dashboard.children.activatePrompt', { name: activatingChild.nick }) }}
+        </p>
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            class="px-4 py-2 rounded-lg bg-gray-700 text-gray-300"
+            @click="dismissActivation"
+          >
+            {{ t('dashboard.children.notNow') }}
+          </button>
+          <button
+            type="button"
+            class="px-4 py-2 rounded-lg bg-primary text-white"
+            @click="activateDevice"
+          >
+            {{ t('dashboard.children.activate') }}
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Delete confirmation dialog -->
     <div
       v-if="deletingChild"
@@ -141,8 +170,12 @@ import { useI18n } from 'vue-i18n'
 import { fetchChildren, createChild, updateChild, deleteChild, type Child } from '../../services/children'
 import { provisionDevice } from '../../services/devices'
 import { ApiRequestError } from '../../services/api'
+import { useAuthStore } from '../../stores/auth'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
+const authStore = useAuthStore()
 const children = ref<Child[]>([])
 const loading = ref(true)
 const nick = ref('')
@@ -153,6 +186,7 @@ const editNick = ref('')
 const saving = ref(false)
 const deletingChild = ref<Child | null>(null)
 const deleting = ref(false)
+const activatingChild = ref<{ nick: string; id: number; deviceId: number } | null>(null)
 
 async function loadChildren() {
   children.value = await fetchChildren()
@@ -175,10 +209,12 @@ async function onAdd() {
   error.value = ''
   adding.value = true
   try {
-    const { ID } = await createChild(nick.value.trim())
-    await provisionDevice(ID)
+    const trimmed = nick.value.trim()
+    const { ID } = await createChild(trimmed)
+    const { deviceId } = await provisionDevice(ID)
     nick.value = ''
     await loadChildren()
+    activatingChild.value = { nick: trimmed, id: ID, deviceId }
   } catch (e) {
     error.value = e instanceof ApiRequestError
       ? e.errDesc
@@ -239,5 +275,18 @@ async function onDelete() {
   } finally {
     deleting.value = false
   }
+}
+
+function dismissActivation() {
+  activatingChild.value = null
+}
+
+function activateDevice() {
+  if (!activatingChild.value) return
+  const { nick: childNick, id, deviceId } = activatingChild.value
+  localStorage.setItem('sismochat_profile', JSON.stringify({ role: 'child', id, nick: childNick, deviceId }))
+  activatingChild.value = null
+  authStore.clearAuth()
+  void router.replace({ name: 'splash' })
 }
 </script>
