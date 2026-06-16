@@ -93,6 +93,13 @@
             </button>
             <button
               type="button"
+              class="text-gray-400 hover:text-orange-400 text-sm"
+              @click="confirmRevoke(child)"
+            >
+              {{ t('dashboard.children.revoke') }}
+            </button>
+            <button
+              type="button"
               class="text-gray-400 hover:text-red-400 text-sm"
               @click="confirmDelete(child)"
             >
@@ -102,6 +109,36 @@
         </template>
       </li>
     </ul>
+
+    <!-- Revoke device confirmation dialog -->
+    <div
+      v-if="revokingChild"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      @click.self="cancelRevoke"
+    >
+      <div class="bg-gray-800 rounded-xl p-6 max-w-sm w-full mx-4 shadow-lg">
+        <p class="text-white mb-4">
+          {{ t('dashboard.children.revokeConfirm', { name: revokingChild.nick }) }}
+        </p>
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            class="px-4 py-2 rounded-lg bg-gray-700 text-gray-300"
+            @click="cancelRevoke"
+          >
+            {{ t('dashboard.children.cancel') }}
+          </button>
+          <button
+            type="button"
+            :disabled="revoking"
+            class="px-4 py-2 rounded-lg bg-orange-600 text-white disabled:opacity-50"
+            @click="onRevoke"
+          >
+            {{ t('dashboard.children.revoke') }}
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Activate device dialog -->
     <div
@@ -168,7 +205,7 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { fetchChildren, createChild, updateChild, deleteChild, type Child } from '../../services/children'
-import { provisionDevice } from '../../services/devices'
+import { provisionDevice, revokeDevice } from '../../services/devices'
 import { ApiRequestError } from '../../services/api'
 import { useAuthStore } from '../../stores/auth'
 import { useRouter } from 'vue-router'
@@ -187,6 +224,8 @@ const saving = ref(false)
 const deletingChild = ref<Child | null>(null)
 const deleting = ref(false)
 const activatingChild = ref<{ nick: string; id: number; deviceId: number } | null>(null)
+const revokingChild = ref<Child | null>(null)
+const revoking = ref(false)
 
 async function loadChildren() {
   children.value = await fetchChildren()
@@ -279,6 +318,32 @@ async function onDelete() {
 
 function dismissActivation() {
   activatingChild.value = null
+}
+
+function confirmRevoke(child: Child) {
+  revokingChild.value = child
+}
+
+function cancelRevoke() {
+  revokingChild.value = null
+}
+
+async function onRevoke() {
+  if (!revokingChild.value) return
+  error.value = ''
+  revoking.value = true
+  try {
+    await revokeDevice(revokingChild.value.id)
+    revokingChild.value = null
+    await loadChildren()
+  } catch (e) {
+    error.value = e instanceof ApiRequestError
+      ? e.errDesc
+      : t('dashboard.children.revokeError')
+    revokingChild.value = null
+  } finally {
+    revoking.value = false
+  }
 }
 
 function activateDevice() {

@@ -127,7 +127,10 @@
       "deleteError": "Impossibile eliminare il figlio. Riprova.",
       "activatePrompt": "Attivare questo dispositivo per {name}? Verrà effettuato il logout e il dispositivo diventerà di {name}.",
       "activate": "Attiva",
-      "notNow": "Non ora"
+      "notNow": "Non ora",
+      "revoke": "Revoca",
+      "revokeConfirm": "Revocare l'accesso al dispositivo di {name}? Sarà necessario ri-provisionare il dispositivo.",
+      "revokeError": "Impossibile revocare il dispositivo. Riprova."
     },
     "connections": {
       "title": "Connessioni",
