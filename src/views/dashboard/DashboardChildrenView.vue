@@ -250,7 +250,14 @@ async function onAdd() {
   try {
     const trimmed = nick.value.trim()
     const { ID } = await createChild(trimmed)
-    const { deviceId } = await provisionDevice(ID)
+    let deviceId: number
+    try {
+      const result = await provisionDevice(ID)
+      deviceId = result.deviceId
+    } catch (e) {
+      await deleteChild(ID)
+      throw e
+    }
     nick.value = ''
     await loadChildren()
     activatingChild.value = { nick: trimmed, id: ID, deviceId }
