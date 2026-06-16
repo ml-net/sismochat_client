@@ -29,7 +29,11 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.removeItem(PROFILE_KEY)
       }
     } else {
-      localStorage.removeItem(PROFILE_KEY)
+      const profile = localStorage.getItem(PROFILE_KEY)
+      const parsed = profile ? (JSON.parse(profile) as { role?: string }) : null
+      if (parsed?.role !== 'child') {
+        localStorage.removeItem(PROFILE_KEY)
+      }
     }
   }
 
