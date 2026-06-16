@@ -112,7 +112,19 @@
     },
     "children": {
       "title": "Children",
-      "placeholder": "Child management coming soon."
+      "loading": "Loading children…",
+      "loadError": "Could not load children. Please try again later.",
+      "empty": "No children added yet.",
+      "nickPlaceholder": "Nickname",
+      "add": "Add",
+      "addError": "Could not add child. Please try again.",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "editError": "Could not update nickname. Please try again.",
+      "delete": "Delete",
+      "deleteConfirm": "Are you sure you want to delete {name}? This cannot be undone.",
+      "deleteError": "Could not delete child. Please try again."
     },
     "connections": {
       "title": "Connections",

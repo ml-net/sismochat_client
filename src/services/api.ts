@@ -59,6 +59,22 @@ function getAuthHeaders(): Record<string, string> {
   return headers
 }
 
+export async function apiGet<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'GET',
+    headers: getAuthHeaders(),
+  })
+  return handleResponse<T>(res)
+}
+
+export async function apiDelete<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'DELETE',
+    headers: getAuthHeaders(),
+  })
+  return handleResponse<T>(res)
+}
+
 export async function apiPost<T>(path: string, body: Record<string, unknown>): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
