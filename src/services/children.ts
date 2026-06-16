@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPatch, apiDelete } from './api'
+import { apiGet, apiPost, apiPatch, apiDelete, ApiRequestError } from './api'
 import { useAuthStore } from '../stores/auth'
 
 export interface Child {
@@ -7,8 +7,9 @@ export interface Child {
 }
 
 export function fetchChildren(): Promise<Child[]> {
-  const { user } = useAuthStore()
-  return apiGet<Child[]>(`/api/v1/parent/${encodeURIComponent(user!.email)}/children`)
+  const email = useAuthStore().user?.email
+  if (!email) throw new ApiRequestError(401, 'Session expired')
+  return apiGet<Child[]>(`/api/v1/parent/${encodeURIComponent(email)}/children`)
 }
 
 export function createChild(nick: string): Promise<{ ID: number }> {

@@ -170,6 +170,7 @@ onMounted(async () => {
 })
 
 async function onAdd() {
+  if (!nick.value.trim()) return
   error.value = ''
   adding.value = true
   try {
@@ -196,6 +197,7 @@ function cancelEdit() {
 }
 
 async function onSaveEdit(id: number) {
+  if (!editNick.value.trim()) return
   error.value = ''
   saving.value = true
   try {
