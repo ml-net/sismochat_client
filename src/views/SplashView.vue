@@ -27,16 +27,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { APP_NAME } from '../constants'
 
 const router = useRouter()
 const { t } = useI18n()
+let timer: ReturnType<typeof setTimeout> | null = null
 
 onMounted(() => {
-  setTimeout(() => {
+  timer = setTimeout(() => {
     try {
       const profile = localStorage.getItem('sismochat_profile')
       if (profile) {
@@ -53,5 +54,9 @@ onMounted(() => {
       void router.replace('/login')
     }
   }, 2500)
+})
+
+onBeforeUnmount(() => {
+  if (timer) clearTimeout(timer)
 })
 </script>
