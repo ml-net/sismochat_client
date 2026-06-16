@@ -139,6 +139,7 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { fetchChildren, createChild, updateChild, deleteChild, type Child } from '../../services/children'
+import { provisionDevice } from '../../services/devices'
 import { ApiRequestError } from '../../services/api'
 
 const { t } = useI18n()
@@ -174,7 +175,8 @@ async function onAdd() {
   error.value = ''
   adding.value = true
   try {
-    await createChild(nick.value.trim())
+    const { ID } = await createChild(nick.value.trim())
+    await provisionDevice(ID)
     nick.value = ''
     await loadChildren()
   } catch (e) {
