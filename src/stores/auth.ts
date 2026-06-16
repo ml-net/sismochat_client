@@ -41,14 +41,15 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = newToken
     user.value = newUser
     const data = JSON.stringify({ token: newToken, user: newUser })
+    const isParentDevice = !!localStorage.getItem('sismochat_virtual_user')
     if (rememberMe) {
       localStorage.setItem(STORAGE_KEY, data)
-      localStorage.setItem(PROFILE_KEY, JSON.stringify({ role: '__parent__' }))
+      if (isParentDevice) localStorage.setItem(PROFILE_KEY, JSON.stringify({ role: '__parent__' }))
       sessionStorage.removeItem(STORAGE_KEY)
     } else {
       sessionStorage.setItem(STORAGE_KEY, data)
       localStorage.removeItem(STORAGE_KEY)
-      localStorage.setItem(PROFILE_KEY, JSON.stringify({ role: '__parent__' }))
+      if (isParentDevice) localStorage.setItem(PROFILE_KEY, JSON.stringify({ role: '__parent__' }))
     }
   }
 
@@ -57,7 +58,11 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null
     localStorage.removeItem(STORAGE_KEY)
     sessionStorage.removeItem(STORAGE_KEY)
-    localStorage.removeItem(PROFILE_KEY)
+    const profile = localStorage.getItem(PROFILE_KEY)
+    const parsed = profile ? (JSON.parse(profile) as { role?: string }) : null
+    if (parsed?.role !== 'child') {
+      localStorage.removeItem(PROFILE_KEY)
+    }
   }
 
   return { token, user, isAuthenticated, hydrate, setAuth, clearAuth }
