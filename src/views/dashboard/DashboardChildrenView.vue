@@ -333,8 +333,15 @@ async function onRevoke() {
   error.value = ''
   revoking.value = true
   try {
-    await revokeDevice(revokingChild.value.id)
+    const revokedId = revokingChild.value.id
+    await revokeDevice(revokedId)
     revokingChild.value = null
+    // Wipe local child profile if this device belongs to the revoked child
+    const profile = localStorage.getItem('sismochat_profile')
+    const parsed = profile ? (JSON.parse(profile) as { role?: string; id?: number }) : null
+    if (parsed?.role === 'child' && parsed.id === revokedId) {
+      localStorage.removeItem('sismochat_profile')
+    }
     await loadChildren()
   } catch (e) {
     error.value = e instanceof ApiRequestError
