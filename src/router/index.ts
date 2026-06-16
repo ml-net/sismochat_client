@@ -30,7 +30,10 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   const authStore = useAuthStore()
-  if (to.meta.auth && !authStore.isAuthenticated) {
+  const profile = localStorage.getItem('sismochat_profile')
+  const parsed = profile ? (JSON.parse(profile) as { role?: string }) : null
+  const isChild = parsed?.role === 'child'
+  if (to.meta.auth && !authStore.isAuthenticated && !isChild) {
     return { name: 'login' }
   }
   if (to.meta.guest && authStore.isAuthenticated) {
