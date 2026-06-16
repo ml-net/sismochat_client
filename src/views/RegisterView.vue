@@ -121,7 +121,8 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    await registerParent(form.email, form.password)
+    const result = await registerParent(form.email, form.password)
+    localStorage.setItem('sismochat_virtual_user', JSON.stringify(result.virtualUser))
     void router.push({ name: 'login', query: { registered: '1' } })
   } catch (err) {
     if (err instanceof ApiRequestError && err.errCode === ERR_EMAIL_TAKEN) {

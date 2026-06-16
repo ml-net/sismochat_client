@@ -5,8 +5,14 @@ export const ERR_INVALID_OTP = 5
 export const ERR_RATE_LIMIT = 15
 export const ERR_WRONG_PASSWORD = 12
 
-interface RegisterResponse {
+export interface RegisterResponse {
   ID: number
+  virtualUser: {
+    id: number
+    deviceId: number
+    keys: { public: string; private: string }
+  }
+  stateCert: string
 }
 
 export interface LoginResponse {
