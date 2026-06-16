@@ -124,7 +124,13 @@
       "editError": "Could not update nickname. Please try again.",
       "delete": "Delete",
       "deleteConfirm": "Are you sure you want to delete {name}? This cannot be undone.",
-      "deleteError": "Could not delete child. Please try again."
+      "deleteError": "Could not delete child. Please try again.",
+      "activatePrompt": "Activate this device for {name}? You will be logged out and the device will become {name}'s.",
+      "activate": "Activate",
+      "notNow": "Not now",
+      "revoke": "Revoke",
+      "revokeConfirm": "Revoke {name}'s device access? The device will need to be re-provisioned.",
+      "revokeError": "Could not revoke device. Please try again."
     },
     "connections": {
       "title": "Connections",
