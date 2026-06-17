@@ -142,7 +142,12 @@
         "notFound": "No parent found with this email.",
         "noChildren": "This parent has no children registered.",
         "rateLimited": "Too many searches. Please try again later.",
-        "searchError": "Search failed. Please try again."
+        "searchError": "Search failed. Please try again.",
+        "selectChild": "My child…",
+        "connect": "Connect",
+        "requestSent": "Connection request sent!",
+        "alreadyExists": "A connection already exists or is pending.",
+        "connectError": "Could not send request. Please try again."
       }
     },
     "settings": {

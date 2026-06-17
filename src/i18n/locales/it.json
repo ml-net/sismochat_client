@@ -142,7 +142,12 @@
         "notFound": "Nessun genitore trovato con questa email.",
         "noChildren": "Questo genitore non ha figli registrati.",
         "rateLimited": "Troppe ricerche. Riprova più tardi.",
-        "searchError": "Ricerca fallita. Riprova."
+        "searchError": "Ricerca fallita. Riprova.",
+        "selectChild": "Mio figlio…",
+        "connect": "Connetti",
+        "requestSent": "Richiesta di connessione inviata!",
+        "alreadyExists": "Una connessione esiste già o è in attesa.",
+        "connectError": "Impossibile inviare la richiesta. Riprova."
       }
     },
     "settings": {
