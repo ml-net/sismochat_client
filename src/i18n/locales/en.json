@@ -134,7 +134,16 @@
     },
     "connections": {
       "title": "Connections",
-      "placeholder": "Connection management coming soon."
+      "discovery": {
+        "title": "Find a parent",
+        "placeholder": "Enter parent email",
+        "search": "Search",
+        "found": "Parent found: {email}",
+        "notFound": "No parent found with this email.",
+        "noChildren": "This parent has no children registered.",
+        "rateLimited": "Too many searches. Please try again later.",
+        "searchError": "Search failed. Please try again."
+      }
     },
     "settings": {
       "title": "Settings",
