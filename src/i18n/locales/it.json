@@ -134,6 +134,30 @@
     },
     "connections": {
       "title": "Connessioni",
+      "incoming": {
+        "title": "Richieste in arrivo",
+        "loading": "Caricamento…",
+        "empty": "Nessuna richiesta in attesa.",
+        "request": "Il figlio #{from} vuole connettersi con il tuo figlio #{to}",
+        "accept": "Accetta",
+        "reject": "Rifiuta",
+        "loadError": "Impossibile caricare le richieste.",
+        "actionError": "Azione fallita. Riprova."
+      },
+      "sent": {
+        "title": "Richieste inviate",
+        "loading": "Caricamento…",
+        "empty": "Nessuna richiesta inviata.",
+        "connection": "#{from} → #{to}",
+        "accepted": "Connesso",
+        "pending": "In attesa",
+        "rejected": "Rifiutata",
+        "remove": "Rimuovi",
+        "removeConfirm": "Rimuovere questa connessione? Entrambi i lati verranno disconnessi.",
+        "cancel": "Annulla",
+        "loadError": "Impossibile caricare le connessioni.",
+        "removeError": "Impossibile rimuovere la connessione. Riprova."
+      },
       "discovery": {
         "title": "Cerca un genitore",
         "placeholder": "Inserisci l'email del genitore",
