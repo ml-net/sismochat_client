@@ -134,7 +134,16 @@
     },
     "connections": {
       "title": "Connessioni",
-      "placeholder": "Gestione connessioni in arrivo."
+      "discovery": {
+        "title": "Cerca un genitore",
+        "placeholder": "Inserisci l'email del genitore",
+        "search": "Cerca",
+        "found": "Genitore trovato: {email}",
+        "notFound": "Nessun genitore trovato con questa email.",
+        "noChildren": "Questo genitore non ha figli registrati.",
+        "rateLimited": "Troppe ricerche. Riprova più tardi.",
+        "searchError": "Ricerca fallita. Riprova."
+      }
     },
     "settings": {
       "title": "Impostazioni",
