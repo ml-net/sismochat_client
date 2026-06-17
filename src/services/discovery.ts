@@ -1,7 +1,6 @@
-import { apiGet, ApiRequestError } from './api'
+import { API_BASE, apiGet, ApiRequestError } from './api'
 import { useAuthStore } from '../stores/auth'
-
-const API_BASE: string = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000'
+import router from '../router'
 
 export interface DiscoveredParent {
   parentID: number
@@ -15,10 +14,19 @@ export interface DiscoveredChild {
 
 export async function searchParent(email: string): Promise<DiscoveredParent | null> {
   const authStore = useAuthStore()
-  if (!authStore.token) throw new ApiRequestError(401, 'Session expired')
+  if (!authStore.token) {
+    authStore.clearAuth()
+    void router.replace({ name: 'login' })
+    throw new ApiRequestError(401, 'Session expired')
+  }
   const res = await fetch(`${API_BASE}/api/v1/parent/${encodeURIComponent(email)}`, {
     headers: { Authorization: `Bearer ${authStore.token}` },
   })
+  if (res.status === 401) {
+    authStore.clearAuth()
+    void router.replace({ name: 'login' })
+    throw new ApiRequestError(401, 'Session expired')
+  }
   if (res.status === 404) return null
   if (res.status === 429) throw new ApiRequestError(15, 'Too many search requests, try again later')
   if (!res.ok) throw new ApiRequestError(-1, 'Search failed')
@@ -26,6 +34,5 @@ export async function searchParent(email: string): Promise<DiscoveredParent | nu
 }
 
 export function fetchParentChildren(email: string): Promise<DiscoveredChild[]> {
-  if (!useAuthStore().token) throw new ApiRequestError(401, 'Session expired')
   return apiGet<DiscoveredChild[]>(`/api/v1/parent/${encodeURIComponent(email)}/children`)
 }

@@ -66,14 +66,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { searchParent, fetchParentChildren, type DiscoveredChild } from '../../services/discovery'
+import { searchParent, fetchParentChildren, type DiscoveredParent, type DiscoveredChild } from '../../services/discovery'
 import { ApiRequestError } from '../../services/api'
 
 const { t } = useI18n()
 const email = ref('')
 const searching = ref(false)
 const error = ref('')
-const found = ref<{ parentID: number; email: string } | null>(null)
+const found = ref<DiscoveredParent | null>(null)
 const children = ref<DiscoveredChild[]>([])
 
 async function onSearch() {

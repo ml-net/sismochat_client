@@ -1,7 +1,7 @@
 import { useAuthStore } from '../stores/auth'
 import router from '../router'
 
-const API_BASE: string = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000'
+export const API_BASE: string = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000'
 
 export interface ApiError {
   errCode: number
