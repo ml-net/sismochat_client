@@ -27,7 +27,9 @@ async function handleResponse<T>(res: Response): Promise<T> {
     void router.replace({ name: 'login' })
     throw new ApiRequestError(401, 'Session expired')
   }
-  if (res.status === 204) return undefined as T
+  if (res.status === 204 || (res.ok && !(res.headers.get('content-type') || '').includes('application/json'))) {
+    return undefined as T
+  }
   const contentType = res.headers.get('content-type') || ''
   if (!contentType.includes('application/json')) {
     throw new ApiRequestError(-1, 'Unexpected response from server')
