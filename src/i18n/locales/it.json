@@ -134,7 +134,7 @@
     },
     "connections": {
       "title": "Connessioni",
-    "refresh": "Aggiorna",
+      "refresh": "Aggiorna",
       "incoming": {
         "title": "Richieste in arrivo",
         "loading": "Caricamento…",
@@ -172,7 +172,9 @@
         "connect": "Connetti",
         "requestSent": "Richiesta di connessione inviata!",
         "alreadyExists": "Una connessione esiste già o è in attesa.",
-        "connectError": "Impossibile inviare la richiesta. Riprova."
+        "connectError": "Impossibile inviare la richiesta. Riprova.",
+        "loadChildrenError": "Impossibile caricare i tuoi figli.",
+        "retry": "Riprova"
       }
     },
     "settings": {

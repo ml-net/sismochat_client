@@ -12,7 +12,7 @@
     </p>
 
     <p
-      v-else-if="!requests.length"
+      v-else-if="!error && !requests.length"
       class="text-gray-400 text-sm"
     >
       {{ t('dashboard.connections.sent.empty') }}

@@ -134,7 +134,7 @@
     },
     "connections": {
       "title": "Connections",
-    "refresh": "Refresh",
+      "refresh": "Refresh",
       "incoming": {
         "title": "Incoming requests",
         "loading": "Loading…",
@@ -172,7 +172,9 @@
         "connect": "Connect",
         "requestSent": "Connection request sent!",
         "alreadyExists": "A connection already exists or is pending.",
-        "connectError": "Could not send request. Please try again."
+        "connectError": "Could not send request. Please try again.",
+        "loadChildrenError": "Could not load your children.",
+        "retry": "Retry"
       }
     },
     "settings": {

@@ -30,6 +30,14 @@
       role="alert"
     >
       {{ error }}
+      <button
+        v-if="!myChildren.length"
+        type="button"
+        class="ml-2 underline text-red-300 hover:text-white"
+        @click="loadMyChildren"
+      >
+        {{ t('dashboard.connections.discovery.retry') }}
+      </button>
     </p>
 
     <p
@@ -118,12 +126,17 @@ const myChildren = ref<Child[]>([])
 const selectedChild = reactive<Record<number, number | ''>>({})
 
 onMounted(async () => {
+  await loadMyChildren()
+})
+
+async function loadMyChildren() {
   try {
     myChildren.value = await fetchChildren()
+    error.value = ''
   } catch {
-    // Non-blocking: connect buttons won't work without children
+    error.value = t('dashboard.connections.discovery.loadChildrenError')
   }
-})
+}
 
 async function onSearch() {
   if (!email.value.trim()) return
