@@ -14,6 +14,7 @@
           :to="item.to"
           :icon="item.icon"
           :label="t(item.labelKey)"
+          :badge="item.to.name === 'dashboard-connections' ? pendingCount : undefined"
         />
       </nav>
       <div class="p-4 border-t border-[var(--theme-surface-border)]">
@@ -56,10 +57,16 @@
           v-for="item in navItems"
           :key="item.to.name"
           :to="item.to"
-          class="flex-1 flex flex-col items-center py-3 text-xs transition-colors"
+          class="relative flex-1 flex flex-col items-center py-3 text-xs transition-colors"
           :class="$route.name === item.to.name ? 'text-[var(--theme-primary)]' : 'text-gray-400 hover:text-gray-200'"
         >
           <span class="text-lg">{{ item.icon }}</span>
+          <span
+            v-if="item.to.name === 'dashboard-connections' && pendingCount"
+            class="absolute top-1 right-1/4 inline-flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-red-600 text-white text-[10px] font-bold"
+          >
+            {{ pendingCount }}
+          </span>
           <span class="mt-1">{{ t(item.labelKey) }}</span>
         </router-link>
         <router-link
@@ -76,15 +83,18 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
 import { APP_NAME } from '../constants'
+import { fetchPendingApprovals } from '../services/connections'
 import SidebarLink from '../components/dashboard/SidebarLink.vue'
 
 const router = useRouter()
 const { t } = useI18n()
 const authStore = useAuthStore()
+const pendingCount = ref(0)
 
 const navItems = [
   { to: { name: 'dashboard-home' }, icon: '🏠', labelKey: 'dashboard.nav.home' },
@@ -92,6 +102,15 @@ const navItems = [
   { to: { name: 'dashboard-connections' }, icon: '🔗', labelKey: 'dashboard.nav.connections' },
   { to: { name: 'dashboard-settings' }, icon: '⚙️', labelKey: 'dashboard.nav.settings' },
 ]
+
+onMounted(async () => {
+  try {
+    const pending = await fetchPendingApprovals()
+    pendingCount.value = pending.length
+  } catch {
+    // non-blocking
+  }
+})
 
 function onLogout() {
   authStore.clearAuth()
