@@ -37,7 +37,7 @@
       >
         <div class="flex items-center gap-2">
           <span class="text-white text-sm">
-            {{ t('dashboard.connections.sent.connection', { from: req.from, to: req.to }) }}
+            {{ t('dashboard.connections.sent.connection', { from: resolveName(req.from), to: resolveName(req.to) }) }}
           </span>
           <span
             class="text-xs px-2 py-0.5 rounded"
@@ -96,12 +96,18 @@ import { useI18n } from 'vue-i18n'
 import { fetchSentRequests, removeConnection, ConnectionStatus, type ConnectionRequest } from '../../services/connections'
 import { ApiRequestError } from '../../services/api'
 
+const props = defineProps<{ nickMap: Record<number, string> }>()
+
 const { t } = useI18n()
 const requests = ref<ConnectionRequest[]>([])
 const loading = ref(true)
 const removing = ref(false)
 const error = ref('')
 const removingReq = ref<ConnectionRequest | null>(null)
+
+function resolveName(id: number): string {
+  return props.nickMap[id] ?? `#${id}`
+}
 
 async function loadRequests() {
   requests.value = await fetchSentRequests()

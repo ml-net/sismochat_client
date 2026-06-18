@@ -134,11 +134,12 @@
     },
     "connections": {
       "title": "Connections",
+    "refresh": "Refresh",
       "incoming": {
         "title": "Incoming requests",
         "loading": "Loading…",
         "empty": "No pending requests.",
-        "request": "Child #{from} wants to connect with your child #{to}",
+        "request": "{from} wants to connect with {to}",
         "accept": "Accept",
         "reject": "Reject",
         "loadError": "Could not load requests.",
@@ -148,7 +149,7 @@
         "title": "Sent requests",
         "loading": "Loading…",
         "empty": "No sent requests.",
-        "connection": "#{from} → #{to}",
+        "connection": "{from} → {to}",
         "accepted": "Connected",
         "pending": "Pending",
         "rejected": "Rejected",

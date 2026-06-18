@@ -134,11 +134,12 @@
     },
     "connections": {
       "title": "Connessioni",
+    "refresh": "Aggiorna",
       "incoming": {
         "title": "Richieste in arrivo",
         "loading": "Caricamento…",
         "empty": "Nessuna richiesta in attesa.",
-        "request": "Il figlio #{from} vuole connettersi con il tuo figlio #{to}",
+        "request": "{from} vuole connettersi con {to}",
         "accept": "Accetta",
         "reject": "Rifiuta",
         "loadError": "Impossibile caricare le richieste.",
@@ -148,7 +149,7 @@
         "title": "Richieste inviate",
         "loading": "Caricamento…",
         "empty": "Nessuna richiesta inviata.",
-        "connection": "#{from} → #{to}",
+        "connection": "{from} → {to}",
         "accepted": "Connesso",
         "pending": "In attesa",
         "rejected": "Rifiutata",

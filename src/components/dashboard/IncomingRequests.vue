@@ -36,7 +36,7 @@
         class="flex items-center justify-between rounded-lg bg-white/5 px-4 py-3"
       >
         <span class="text-white text-sm">
-          {{ t('dashboard.connections.incoming.request', { from: req.from, to: req.to }) }}
+          {{ t('dashboard.connections.incoming.request', { from: resolveName(req.from), to: resolveName(req.to) }) }}
         </span>
         <div class="flex gap-2">
           <button
@@ -67,11 +67,17 @@ import { useI18n } from 'vue-i18n'
 import { fetchPendingApprovals, acceptConnection, rejectConnection, type ConnectionRequest } from '../../services/connections'
 import { ApiRequestError } from '../../services/api'
 
+const props = defineProps<{ nickMap: Record<number, string> }>()
+
 const { t } = useI18n()
 const requests = ref<ConnectionRequest[]>([])
 const loading = ref(true)
 const processing = ref(false)
 const error = ref('')
+
+function resolveName(id: number): string {
+  return props.nickMap[id] ?? `#${id}`
+}
 
 async function loadRequests() {
   requests.value = await fetchPendingApprovals()
