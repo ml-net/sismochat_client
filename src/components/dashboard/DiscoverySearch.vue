@@ -30,6 +30,21 @@
       role="alert"
     >
       {{ error }}
+      <button
+        v-if="!myChildren.length"
+        type="button"
+        class="ml-2 underline text-red-300 hover:text-white"
+        @click="loadMyChildren"
+      >
+        {{ t('dashboard.connections.discovery.retry') }}
+      </button>
+    </p>
+
+    <p
+      v-if="success"
+      class="text-green-400 text-sm mb-4"
+    >
+      {{ success }}
     </p>
 
     <div
@@ -49,7 +64,7 @@
 
       <ul
         v-else
-        class="space-y-1"
+        class="space-y-2"
       >
         <li
           v-for="child in children"
@@ -57,6 +72,34 @@
           class="flex items-center justify-between rounded bg-white/5 px-3 py-2"
         >
           <span class="text-white text-sm">{{ child.nick }}</span>
+          <div class="flex items-center gap-2">
+            <select
+              v-model="selectedChild[child.id]"
+              class="px-2 py-1 rounded bg-white/10 border border-gray-600 text-white text-sm focus:outline-none focus:border-secondary-light"
+            >
+              <option
+                value=""
+                disabled
+              >
+                {{ t('dashboard.connections.discovery.selectChild') }}
+              </option>
+              <option
+                v-for="mine in myChildren"
+                :key="mine.id"
+                :value="mine.id"
+              >
+                {{ mine.nick }}
+              </option>
+            </select>
+            <button
+              type="button"
+              :disabled="!selectedChild[child.id] || sending"
+              class="px-2 py-1 rounded bg-primary text-white text-sm disabled:opacity-50"
+              @click="onConnect(child.id)"
+            >
+              {{ t('dashboard.connections.discovery.connect') }}
+            </button>
+          </div>
         </li>
       </ul>
     </div>
@@ -64,21 +107,41 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { searchParent, fetchParentChildren, type DiscoveredParent, type DiscoveredChild } from '../../services/discovery'
+import { fetchChildren, type Child } from '../../services/children'
+import { sendConnectionRequest } from '../../services/connections'
 import { ApiRequestError } from '../../services/api'
 
 const { t } = useI18n()
 const email = ref('')
 const searching = ref(false)
+const sending = ref(false)
 const error = ref('')
+const success = ref('')
 const found = ref<DiscoveredParent | null>(null)
 const children = ref<DiscoveredChild[]>([])
+const myChildren = ref<Child[]>([])
+const selectedChild = reactive<Record<number, number | ''>>({})
+
+onMounted(async () => {
+  await loadMyChildren()
+})
+
+async function loadMyChildren() {
+  try {
+    myChildren.value = await fetchChildren()
+    error.value = ''
+  } catch {
+    error.value = t('dashboard.connections.discovery.loadChildrenError')
+  }
+}
 
 async function onSearch() {
   if (!email.value.trim()) return
   error.value = ''
+  success.value = ''
   found.value = null
   children.value = []
   searching.value = true
@@ -98,6 +161,26 @@ async function onSearch() {
     }
   } finally {
     searching.value = false
+  }
+}
+
+async function onConnect(toChildId: number) {
+  const fromChildId = selectedChild[toChildId]
+  if (!fromChildId) return
+  error.value = ''
+  success.value = ''
+  sending.value = true
+  try {
+    await sendConnectionRequest(fromChildId, toChildId)
+    success.value = t('dashboard.connections.discovery.requestSent')
+  } catch (e) {
+    if (e instanceof ApiRequestError && e.errCode === 11) {
+      error.value = t('dashboard.connections.discovery.alreadyExists')
+    } else {
+      error.value = t('dashboard.connections.discovery.connectError')
+    }
+  } finally {
+    sending.value = false
   }
 }
 </script>

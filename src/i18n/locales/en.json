@@ -134,6 +134,31 @@
     },
     "connections": {
       "title": "Connections",
+      "refresh": "Refresh",
+      "incoming": {
+        "title": "Incoming requests",
+        "loading": "Loading…",
+        "empty": "No pending requests.",
+        "request": "{from} wants to connect with {to}",
+        "accept": "Accept",
+        "reject": "Reject",
+        "loadError": "Could not load requests.",
+        "actionError": "Action failed. Please try again."
+      },
+      "sent": {
+        "title": "Sent requests",
+        "loading": "Loading…",
+        "empty": "No sent requests.",
+        "connection": "{from} → {to}",
+        "accepted": "Connected",
+        "pending": "Pending",
+        "rejected": "Rejected",
+        "remove": "Remove",
+        "removeConfirm": "Remove this connection? Both sides will be disconnected.",
+        "cancel": "Cancel",
+        "loadError": "Could not load connections.",
+        "removeError": "Could not remove connection. Please try again."
+      },
       "discovery": {
         "title": "Find a parent",
         "placeholder": "Enter parent email",
@@ -142,7 +167,14 @@
         "notFound": "No parent found with this email.",
         "noChildren": "This parent has no children registered.",
         "rateLimited": "Too many searches. Please try again later.",
-        "searchError": "Search failed. Please try again."
+        "searchError": "Search failed. Please try again.",
+        "selectChild": "My child…",
+        "connect": "Connect",
+        "requestSent": "Connection request sent!",
+        "alreadyExists": "A connection already exists or is pending.",
+        "connectError": "Could not send request. Please try again.",
+        "loadChildrenError": "Could not load your children.",
+        "retry": "Retry"
       }
     },
     "settings": {

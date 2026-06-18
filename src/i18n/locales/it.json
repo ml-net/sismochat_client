@@ -134,6 +134,31 @@
     },
     "connections": {
       "title": "Connessioni",
+      "refresh": "Aggiorna",
+      "incoming": {
+        "title": "Richieste in arrivo",
+        "loading": "Caricamento…",
+        "empty": "Nessuna richiesta in attesa.",
+        "request": "{from} vuole connettersi con {to}",
+        "accept": "Accetta",
+        "reject": "Rifiuta",
+        "loadError": "Impossibile caricare le richieste.",
+        "actionError": "Azione fallita. Riprova."
+      },
+      "sent": {
+        "title": "Richieste inviate",
+        "loading": "Caricamento…",
+        "empty": "Nessuna richiesta inviata.",
+        "connection": "{from} → {to}",
+        "accepted": "Connesso",
+        "pending": "In attesa",
+        "rejected": "Rifiutata",
+        "remove": "Rimuovi",
+        "removeConfirm": "Rimuovere questa connessione? Entrambi i lati verranno disconnessi.",
+        "cancel": "Annulla",
+        "loadError": "Impossibile caricare le connessioni.",
+        "removeError": "Impossibile rimuovere la connessione. Riprova."
+      },
       "discovery": {
         "title": "Cerca un genitore",
         "placeholder": "Inserisci l'email del genitore",
@@ -142,7 +167,14 @@
         "notFound": "Nessun genitore trovato con questa email.",
         "noChildren": "Questo genitore non ha figli registrati.",
         "rateLimited": "Troppe ricerche. Riprova più tardi.",
-        "searchError": "Ricerca fallita. Riprova."
+        "searchError": "Ricerca fallita. Riprova.",
+        "selectChild": "Mio figlio…",
+        "connect": "Connetti",
+        "requestSent": "Richiesta di connessione inviata!",
+        "alreadyExists": "Una connessione esiste già o è in attesa.",
+        "connectError": "Impossibile inviare la richiesta. Riprova.",
+        "loadChildrenError": "Impossibile caricare i tuoi figli.",
+        "retry": "Riprova"
       }
     },
     "settings": {
