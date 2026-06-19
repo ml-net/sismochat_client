@@ -184,7 +184,16 @@
   },
   "chat": {
     "title": "Chat",
-    "noMessages": "Nessun messaggio"
+    "backToDashboard": "Dashboard",
+    "contacts": {
+      "loading": "Caricamento contatti…",
+      "empty": "Nessuna connessione. Aggiungi amici dalla dashboard."
+    },
+    "conversation": {
+      "back": "Indietro",
+      "empty": "Nessun messaggio. Manda un saluto!",
+      "placeholder": "Scrivi un messaggio…"
+    }
   },
   "notFound": {
     "message": "Pagina non trovata"

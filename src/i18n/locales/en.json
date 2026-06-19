@@ -184,7 +184,16 @@
   },
   "chat": {
     "title": "Chat",
-    "noMessages": "No messages yet"
+    "backToDashboard": "Dashboard",
+    "contacts": {
+      "loading": "Loading contacts…",
+      "empty": "No connections yet. Add friends from the dashboard."
+    },
+    "conversation": {
+      "back": "Back",
+      "empty": "No messages yet. Say hello!",
+      "placeholder": "Type a message…"
+    }
   },
   "notFound": {
     "message": "Page not found"
