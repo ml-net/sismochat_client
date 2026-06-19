@@ -19,7 +19,7 @@ export async function searchParent(email: string): Promise<DiscoveredParent | nu
     void router.replace({ name: 'login' })
     throw new ApiRequestError(401, 'Session expired')
   }
-  const res = await fetch(`${API_BASE}/api/v1/parent/${encodeURIComponent(email)}`, {
+  const res = await fetch(`${API_BASE}/api/v1/parents/${encodeURIComponent(email)}`, {
     headers: { Authorization: `Bearer ${authStore.token}` },
   })
   if (res.status === 401) {
@@ -34,5 +34,5 @@ export async function searchParent(email: string): Promise<DiscoveredParent | nu
 }
 
 export function fetchParentChildren(email: string): Promise<DiscoveredChild[]> {
-  return apiGet<DiscoveredChild[]>(`/api/v1/parent/${encodeURIComponent(email)}/children`)
+  return apiGet<DiscoveredChild[]>(`/api/v1/parents/${encodeURIComponent(email)}/children`)
 }
