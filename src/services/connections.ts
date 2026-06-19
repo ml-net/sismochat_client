@@ -6,6 +6,8 @@ export interface ConnectionRequest {
   from: number
   to: number
   status: number
+  fromNick: string | null
+  toNick: string | null
 }
 
 export const ConnectionStatus = {
@@ -22,27 +24,27 @@ function getParentId(): number {
 
 export function sendConnectionRequest(from: number, to: number): Promise<void> {
   getParentId()
-  return apiPost<void>(`/api/v1/connection/${from}/${to}`, {})
+  return apiPost<void>(`/api/v1/connections/${from}/${to}`, {})
 }
 
 export function fetchSentRequests(): Promise<ConnectionRequest[]> {
   const parentId = getParentId()
-  return apiGet<ConnectionRequest[]>(`/api/v1/connection/sent/${parentId}`)
+  return apiGet<ConnectionRequest[]>(`/api/v1/connections/sent/${parentId}`)
 }
 
 export function fetchPendingApprovals(): Promise<ConnectionRequest[]> {
   const parentId = getParentId()
-  return apiGet<ConnectionRequest[]>(`/api/v1/connection/approvalList/${parentId}`)
+  return apiGet<ConnectionRequest[]>(`/api/v1/connections/approvalList/${parentId}`)
 }
 
 export function acceptConnection(connId: number): Promise<unknown> {
-  return apiPatch<unknown>(`/api/v1/connection/${connId}`, { status: ConnectionStatus.ACCEPTED })
+  return apiPatch<unknown>(`/api/v1/connections/${connId}`, { status: ConnectionStatus.ACCEPTED })
 }
 
 export function rejectConnection(connId: number): Promise<void> {
-  return apiPatch<void>(`/api/v1/connection/${connId}`, { status: ConnectionStatus.REJECTED })
+  return apiPatch<void>(`/api/v1/connections/${connId}`, { status: ConnectionStatus.REJECTED })
 }
 
 export function removeConnection(connId: number): Promise<void> {
-  return apiDelete<void>(`/api/v1/connection/${connId}`)
+  return apiDelete<void>(`/api/v1/connections/${connId}`)
 }

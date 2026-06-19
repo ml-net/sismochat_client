@@ -21,7 +21,7 @@ export interface LoginResponse {
 }
 
 export function registerParent(email: string, password: string): Promise<RegisterResponse> {
-  return apiPost<RegisterResponse>('/api/v1/parent', { email, pwd: password })
+  return apiPost<RegisterResponse>('/api/v1/parents', { email, pwd: password })
 }
 
 export function loginParent(email: string, password: string): Promise<LoginResponse> {
@@ -29,13 +29,13 @@ export function loginParent(email: string, password: string): Promise<LoginRespo
 }
 
 export function requestPasswordReset(email: string): Promise<{ msg: string }> {
-  return apiPost<{ msg: string }>('/api/v1/parent/reset-request', { email })
+  return apiPost<{ msg: string }>('/api/v1/parents/reset-request', { email })
 }
 
 export function resetPassword(email: string, otp: string, newPassword: string): Promise<void> {
-  return apiPost<void>('/api/v1/parent/reset', { email, otp, newPassword })
+  return apiPost<void>('/api/v1/parents/reset', { email, otp, newPassword })
 }
 
 export function changePassword(oldPassword: string, newPassword: string): Promise<unknown> {
-  return apiPatch<unknown>('/api/v1/parent/password', { oldPassword, newPassword })
+  return apiPatch<unknown>('/api/v1/parents/password', { oldPassword, newPassword })
 }

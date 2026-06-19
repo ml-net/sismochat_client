@@ -9,17 +9,17 @@ export interface Child {
 export function fetchChildren(): Promise<Child[]> {
   const email = useAuthStore().user?.email
   if (!email) throw new ApiRequestError(401, 'Session expired')
-  return apiGet<Child[]>(`/api/v1/parent/${encodeURIComponent(email)}/children`)
+  return apiGet<Child[]>(`/api/v1/parents/${encodeURIComponent(email)}/children`)
 }
 
 export function createChild(nick: string): Promise<{ ID: number }> {
-  return apiPost<{ ID: number }>('/api/v1/user', { nick })
+  return apiPost<{ ID: number }>('/api/v1/users', { nick })
 }
 
 export function updateChild(id: number, nick: string): Promise<Child> {
-  return apiPatch<Child>(`/api/v1/user/${id}`, { nick })
+  return apiPatch<Child>(`/api/v1/users/${id}`, { nick })
 }
 
 export function deleteChild(id: number): Promise<void> {
-  return apiDelete<void>(`/api/v1/user/${id}`)
+  return apiDelete<void>(`/api/v1/users/${id}`)
 }
