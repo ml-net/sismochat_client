@@ -19,7 +19,7 @@
       </nav>
       <div class="p-4 border-t border-[var(--theme-surface-border)]">
         <SidebarLink
-          :to="{ name: 'chat' }"
+          :to="{ name: 'chat-contacts' }"
           icon="💬"
           :label="t('dashboard.nav.chat')"
         />
@@ -70,9 +70,9 @@
           <span class="mt-1">{{ t(item.labelKey) }}</span>
         </router-link>
         <router-link
-          :to="{ name: 'chat' }"
+          :to="{ name: 'chat-contacts' }"
           class="flex-1 flex flex-col items-center py-3 text-xs transition-colors"
-          :class="$route.name === 'chat' ? 'text-[var(--theme-primary)]' : 'text-gray-400 hover:text-gray-200'"
+          :class="$route.name === 'chat-contacts' ? 'text-[var(--theme-primary)]' : 'text-gray-400 hover:text-gray-200'"
         >
           <span class="text-lg">💬</span>
           <span class="mt-1">{{ t('dashboard.nav.chat') }}</span>

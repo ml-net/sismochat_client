@@ -19,7 +19,15 @@ const routes = [
       { path: 'settings', name: 'dashboard-settings', component: () => import('../views/dashboard/DashboardSettingsView.vue') },
     ],
   },
-  { path: '/chat/:contactId?', name: 'chat', component: () => import('../views/ChatView.vue'), meta: { auth: true } },
+  {
+    path: '/chat',
+    component: () => import('../layouts/ChatLayout.vue'),
+    meta: { auth: true },
+    children: [
+      { path: '', name: 'chat-contacts', component: () => import('../views/chat/ContactListView.vue') },
+      { path: ':contactId', name: 'chat-conversation', component: () => import('../views/chat/ConversationView.vue') },
+    ],
+  },
   { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('../views/NotFoundView.vue') },
 ]
 
