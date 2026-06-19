@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v0.3.1] - 2026-06-19 — API v0.11.0 Compatibility
+
+### Changed
+
+- All API paths updated to plural form for API v0.11.0 compatibility (`/parents`, `/users`, `/messages`, `/connections`, `/devices`) (#114)
+- Connection lists now display actual nicknames for both children (from API `fromNick`/`toNick` fields) (#114)
+
 ## [v0.3.0] - 2026-06-19 — Parent Dashboard
 
 ### Added
@@ -72,6 +79,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Vitest build-output tests (PWA manifest, icons, SW, offline, fallback)
 - AGPL-3.0 license
 
+[v0.3.1]: https://github.com/ml-net/sismochat_client/compare/v0.3.0...v0.3.1
 [v0.3.0]: https://github.com/ml-net/sismochat_client/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/ml-net/sismochat_client/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/ml-net/sismochat_client/releases/tag/v0.1.0
