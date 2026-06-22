@@ -10,5 +10,5 @@ import { useMessageStore } from '../stores/messages'
 
 const authStore = useAuthStore()
 const messageStore = useMessageStore()
-if (authStore.user) messageStore.hydrate(String(authStore.user.id))
+if (authStore.user) void messageStore.hydrate(String(authStore.user.id))
 </script>

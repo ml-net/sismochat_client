@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { openDB, type IDBPDatabase } from 'idb'
 import { fetchUnread, fetchMessage, sendMessage, ackMessage } from '../services/messages'
 import type { Message } from '../services/messages'
 
-const STORAGE_KEY = 'sismochat_messages'
+const DB_PREFIX = 'sismochat_messages_'
+const STORE_NAME = 'messages'
+const LEGACY_PREFIX = 'sismochat_messages_'
 
 export interface StoredMessage {
   id: number
+  contactId: string
   from: string
   to: string
   body: string
@@ -15,35 +19,67 @@ export interface StoredMessage {
   mine: boolean
 }
 
+async function getDb(userId: string): Promise<IDBPDatabase> {
+  return openDB(`${DB_PREFIX}${userId}`, 1, {
+    upgrade(db) {
+      const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' })
+      store.createIndex('by-contact', 'contactId')
+    },
+  })
+}
+
 export const useMessageStore = defineStore('messages', () => {
-  // Map: contactId -> StoredMessage[]
   const conversations = ref<Record<string, StoredMessage[]>>({})
-
   const currentUserId = ref<string>('')
+  let db: IDBPDatabase | null = null
 
-  function hydrate(userId: string) {
+  async function hydrate(userId: string) {
     currentUserId.value = userId
-    const stored = localStorage.getItem(`${STORAGE_KEY}_${userId}`)
-    if (stored) {
-      try { conversations.value = JSON.parse(stored) as Record<string, StoredMessage[]> }
-      catch { conversations.value = {} }
-    } else {
-      conversations.value = {}
+    db = await getDb(userId)
+
+    // Migrate from localStorage if legacy data exists
+    const legacyKey = `${LEGACY_PREFIX}${userId}`
+    const legacy = localStorage.getItem(legacyKey)
+    if (legacy) {
+      try {
+        const data = JSON.parse(legacy) as Record<string, StoredMessage[]>
+        const tx = db.transaction(STORE_NAME, 'readwrite')
+        for (const [contactId, msgs] of Object.entries(data)) {
+          for (const msg of msgs) {
+            await tx.store.put({ ...msg, contactId })
+          }
+        }
+        await tx.done
+      } catch { /* ignore corrupt legacy data */ }
+      localStorage.removeItem(legacyKey)
     }
+
+    // Load all messages from IndexedDB
+    const all = await db.getAll(STORE_NAME)
+    const grouped: Record<string, StoredMessage[]> = {}
+    for (const msg of all) {
+      const m = msg as StoredMessage
+      if (!grouped[m.contactId]) grouped[m.contactId] = []
+      grouped[m.contactId].push(m)
+    }
+    for (const msgs of Object.values(grouped)) {
+      msgs.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+    }
+    conversations.value = grouped
   }
 
-  function persist() {
-    if (!currentUserId.value) return
-    localStorage.setItem(`${STORAGE_KEY}_${currentUserId.value}`, JSON.stringify(conversations.value))
+  async function persistMessage(msg: StoredMessage) {
+    if (!db) return
+    await db.put(STORE_NAME, msg)
   }
 
-  function addMessage(contactId: string, msg: StoredMessage) {
+  async function addMessage(contactId: string, msg: Omit<StoredMessage, 'contactId'>) {
     if (!conversations.value[contactId]) conversations.value[contactId] = []
-    // Avoid duplicates
     if (conversations.value[contactId].some(m => m.id === msg.id)) return
-    conversations.value[contactId].push(msg)
+    const stored: StoredMessage = { ...msg, contactId }
+    conversations.value[contactId].push(stored)
     conversations.value[contactId].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-    persist()
+    await persistMessage(stored)
   }
 
   function getMessages(contactId: string): StoredMessage[] {
@@ -60,7 +96,7 @@ export const useMessageStore = defineStore('messages', () => {
 
   async function send(to: string, body: string, type = 'user') {
     const res = await sendMessage(to, body, type)
-    const msg: StoredMessage = {
+    const msg = {
       id: res.messageID,
       from: currentUserId.value,
       to,
@@ -69,7 +105,7 @@ export const useMessageStore = defineStore('messages', () => {
       timestamp: new Date().toISOString(),
       mine: true,
     }
-    addMessage(to, msg)
+    await addMessage(to, msg)
     return res
   }
 
@@ -84,7 +120,7 @@ export const useMessageStore = defineStore('messages', () => {
       catch { continue }
 
       const contactId = full.from === currentUserId.value ? full.to : full.from
-      const msg: StoredMessage = {
+      const msg = {
         id: full.id,
         from: full.from,
         to: full.to,
@@ -93,22 +129,26 @@ export const useMessageStore = defineStore('messages', () => {
         timestamp: full.createdAt,
         mine: full.from === currentUserId.value,
       }
-      addMessage(contactId, msg)
+      await addMessage(contactId, msg)
 
       try { await ackMessage(full.id) }
       catch { /* will retry next cycle */ }
     }
   }
 
-  function removeMessage(contactId: string, msgId: number) {
+  async function removeMessage(contactId: string, msgId: number) {
     if (!conversations.value[contactId]) return
     conversations.value[contactId] = conversations.value[contactId].filter(m => m.id !== msgId)
-    persist()
+    if (db) await db.delete(STORE_NAME, msgId)
   }
 
-  function clear() {
+  async function clear() {
     conversations.value = {}
-    if (currentUserId.value) localStorage.removeItem(`${STORAGE_KEY}_${currentUserId.value}`)
+    if (db) {
+      const tx = db.transaction(STORE_NAME, 'readwrite')
+      await tx.store.clear()
+      await tx.done
+    }
   }
 
   return { conversations, currentUserId, hydrate, send, relay, getMessages, lastMessageByContact, addMessage, removeMessage, clear }
