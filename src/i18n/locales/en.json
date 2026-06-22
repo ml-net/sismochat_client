@@ -193,6 +193,10 @@
       "back": "Back",
       "empty": "No messages yet. Say hello!",
       "placeholder": "Type a message…"
+    },
+    "status": {
+      "online": "Connected",
+      "offline": "Disconnected"
     }
   },
   "notFound": {

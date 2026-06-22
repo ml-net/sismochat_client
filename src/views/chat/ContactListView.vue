@@ -2,9 +2,16 @@
   <div class="flex-1 flex flex-col">
     <!-- Header -->
     <header class="flex items-center justify-between px-4 py-3 bg-gray-900/80 border-b border-emerald-500/20">
-      <h1 class="text-xl font-bold text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">
-        {{ APP_NAME }}
-      </h1>
+      <div class="flex items-center gap-2">
+        <h1 class="text-xl font-bold text-white drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]">
+          {{ APP_NAME }}
+        </h1>
+        <span
+          class="w-2.5 h-2.5 rounded-full"
+          :class="connected ? 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.7)]' : 'bg-gray-500'"
+          :title="connected ? t('chat.status.online') : t('chat.status.offline')"
+        />
+      </div>
       <router-link
         :to="{ name: 'dashboard-home' }"
         class="w-9 h-9 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center hover:border-blue-400/50 transition-colors"
@@ -72,6 +79,7 @@ import { useI18n } from 'vue-i18n'
 import { APP_NAME } from '../../constants'
 import { apiGet } from '../../services/api'
 import { useMessageStore } from '../../stores/messages'
+import { connected } from '../../services/websocket'
 
 interface Contact {
   id: string

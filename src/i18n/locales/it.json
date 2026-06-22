@@ -193,6 +193,10 @@
       "back": "Indietro",
       "empty": "Nessun messaggio. Manda un saluto!",
       "placeholder": "Scrivi un messaggio…"
+    },
+    "status": {
+      "online": "Connesso",
+      "offline": "Disconnesso"
     }
   },
   "notFound": {
