@@ -39,15 +39,25 @@
         <router-link
           v-for="contact in contacts"
           :key="contact.id"
-          :to="{ name: 'chat-conversation', params: { contactId: contact.id } }"
+          :to="{ name: 'chat-conversation', params: { contactId: contact.id }, query: { nick: contact.nick } }"
           class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800/40 transition-colors"
         >
-          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-blue-400 flex items-center justify-center text-white font-bold">
+          <div class="relative w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-blue-400 flex items-center justify-center text-white font-bold">
             {{ initial(contact.nick) }}
+            <span
+              v-if="unreadCount(contact.id)"
+              class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center font-bold"
+            >{{ unreadCount(contact.id) }}</span>
           </div>
           <div class="flex-1 min-w-0">
             <p class="text-white font-semibold text-sm truncate">
               {{ contact.nick }}
+            </p>
+            <p
+              v-if="lastMessage(contact.id)"
+              class="text-gray-400 text-xs truncate"
+            >
+              {{ lastMessage(contact.id) }}
             </p>
           </div>
         </router-link>
@@ -61,6 +71,7 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { APP_NAME } from '../../constants'
 import { apiGet } from '../../services/api'
+import { useMessageStore } from '../../stores/messages'
 
 interface Contact {
   id: string
@@ -68,11 +79,22 @@ interface Contact {
 }
 
 const { t } = useI18n()
+const messageStore = useMessageStore()
 const contacts = ref<Contact[]>([])
 const loading = ref(true)
 
 function initial(nick: string): string {
   return nick.charAt(0).toUpperCase()
+}
+
+function lastMessage(contactId: string): string {
+  const msg = messageStore.lastMessageByContact[contactId]
+  return msg ? msg.body : ''
+}
+
+function unreadCount(contactId: string): number {
+  const msgs = messageStore.getMessages(contactId)
+  return msgs.filter(m => !m.mine).length ? 0 : 0 // TODO: track read state in #124
 }
 
 onMounted(async () => {

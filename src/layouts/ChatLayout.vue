@@ -5,5 +5,10 @@
 </template>
 
 <script setup lang="ts">
-// Chat layout — full-screen container for contact list and conversation views
+import { useAuthStore } from '../stores/auth'
+import { useMessageStore } from '../stores/messages'
+
+const authStore = useAuthStore()
+const messageStore = useMessageStore()
+if (authStore.user) messageStore.hydrate(String(authStore.user.id))
 </script>
