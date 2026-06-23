@@ -18,6 +18,7 @@ let relaying = false
 if (authStore.user && authStore.token) {
   void messageStore.hydrate(String(authStore.user.id))
   connectWs(authStore.token)
+  void messageStore.relay()
 }
 
 const unsubscribe = onWsEvent((event) => {

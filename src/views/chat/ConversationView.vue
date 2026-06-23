@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 flex flex-col">
+  <div class="flex-1 flex flex-col min-h-0">
     <!-- Header -->
     <header class="flex items-center gap-3 px-4 py-3 bg-gray-900/80 border-b border-emerald-500/20">
       <router-link
@@ -22,7 +22,7 @@
     <!-- Messages -->
     <main
       ref="messagesContainer"
-      class="flex-1 overflow-y-auto p-4 space-y-3"
+      class="flex-1 min-h-0 overflow-y-auto p-4 space-y-3"
     >
       <p
         v-if="!messages.length"
