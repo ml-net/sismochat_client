@@ -13,6 +13,7 @@
         />
       </div>
       <router-link
+        v-if="!isChild"
         :to="{ name: 'dashboard-home' }"
         class="w-9 h-9 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center hover:border-blue-400/50 transition-colors"
         :aria-label="t('chat.backToDashboard')"
@@ -90,6 +91,14 @@ const { t } = useI18n()
 const messageStore = useMessageStore()
 const contacts = ref<Contact[]>([])
 const loading = ref(true)
+
+const isChild = (() => {
+  try {
+    const profile = localStorage.getItem('sismochat_profile')
+    if (!profile) return false
+    return (JSON.parse(profile) as { role?: string }).role === 'child'
+  } catch { return false }
+})()
 
 function initial(nick: string): string {
   return nick.charAt(0).toUpperCase()
