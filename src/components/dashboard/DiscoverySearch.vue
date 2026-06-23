@@ -173,6 +173,10 @@ async function onConnect(toChildId: number) {
   try {
     await sendConnectionRequest(fromChildId, toChildId)
     success.value = t('dashboard.connections.discovery.requestSent')
+    email.value = ''
+    found.value = null
+    children.value = []
+    Object.keys(selectedChild).forEach(k => { selectedChild[Number(k)] = '' })
   } catch (e) {
     if (e instanceof ApiRequestError && e.errCode === 11) {
       error.value = t('dashboard.connections.discovery.alreadyExists')
