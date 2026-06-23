@@ -109,9 +109,9 @@ function lastMessage(contactId: string): string {
   return msg ? msg.body : ''
 }
 
-function unreadCount(contactId: string): number {
-  const msgs = messageStore.getMessages(contactId)
-  return msgs.filter(m => !m.mine).length ? 0 : 0 // TODO: track read state in #124
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function unreadCount(_contactId: string): number {
+  return 0 // TODO: implement read/unread tracking in #124
 }
 
 onMounted(async () => {

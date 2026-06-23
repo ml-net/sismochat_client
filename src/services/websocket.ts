@@ -27,6 +27,7 @@ export function onWsEvent(handler: WsEventHandler) {
 }
 
 export function connectWs(jwt: string) {
+  if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return
   token = jwt
   intentionalClose = false
   open()

@@ -14,19 +14,37 @@ const authStore = useAuthStore()
 const messageStore = useMessageStore()
 
 let relaying = false
+let pendingRelay = false
 
-if (authStore.user && authStore.token) {
-  void messageStore.hydrate(String(authStore.user.id))
+async function initMessaging() {
+  if (!authStore.user || !authStore.token) return
+  await messageStore.hydrate(String(authStore.user.id))
   connectWs(authStore.token)
-  void messageStore.relay()
+  await messageStore.relay()
 }
 
+void initMessaging()
+
 const unsubscribe = onWsEvent((event) => {
-  if (event.type === 'new_message' && !relaying) {
-    relaying = true
-    void messageStore.relay().finally(() => { relaying = false })
+  if (event.type === 'new_message') {
+    if (relaying) {
+      pendingRelay = true
+      return
+    }
+    triggerRelay()
   }
 })
+
+function triggerRelay() {
+  relaying = true
+  void messageStore.relay().finally(() => {
+    relaying = false
+    if (pendingRelay) {
+      pendingRelay = false
+      triggerRelay()
+    }
+  })
+}
 
 onUnmounted(() => {
   unsubscribe()

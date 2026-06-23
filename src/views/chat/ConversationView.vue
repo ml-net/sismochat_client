@@ -111,7 +111,7 @@ function scrollToBottom() {
   })
 }
 
-watch(messages, scrollToBottom, { deep: true })
+watch(messages, scrollToBottom, { deep: true, immediate: true })
 
 async function onSend() {
   const body = message.value.trim()
@@ -119,7 +119,7 @@ async function onSend() {
   message.value = ''
   sending.value = true
   try { await messageStore.send(contactId.value, body) }
-  catch { /* TODO: show error toast */ }
+  catch { message.value = body }
   finally { sending.value = false }
 }
 </script>
