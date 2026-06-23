@@ -71,6 +71,7 @@ const props = defineProps<{ nickMap?: Record<number, string> }>()
 
 const { t } = useI18n()
 const refreshPendingCount = inject<() => Promise<void>>('refreshPendingCount')
+const refreshConnections = inject<() => Promise<void>>('refreshConnections')
 const requests = ref<ConnectionRequest[]>([])
 const loading = ref(true)
 const processing = ref(false)
@@ -103,6 +104,7 @@ async function onAccept(connId: number) {
     await acceptConnection(connId)
     await loadRequests()
     await refreshPendingCount?.()
+    await refreshConnections?.()
   } catch (e) {
     error.value = e instanceof ApiRequestError
       ? e.errDesc
@@ -119,6 +121,7 @@ async function onReject(connId: number) {
     await rejectConnection(connId)
     await loadRequests()
     await refreshPendingCount?.()
+    await refreshConnections?.()
   } catch (e) {
     error.value = e instanceof ApiRequestError
       ? e.errDesc

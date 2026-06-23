@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { fetchChildren, type Child } from '../../services/children'
 import DiscoverySearch from '../../components/dashboard/DiscoverySearch.vue'
@@ -54,6 +54,8 @@ async function refresh() {
   refreshKey.value++
   refreshing.value = false
 }
+
+provide('refreshConnections', refresh)
 
 onMounted(loadNickMap)
 </script>
