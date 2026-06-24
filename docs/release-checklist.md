@@ -208,3 +208,13 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 18.5 WebSocket auto-reconnects after network drop
 - [ ] 18.6 Messages survive app restart (stored in IndexedDB)
 - [ ] 18.7 No duplicate messages after reconnect/relay
+
+## 19. E2E Encryption
+
+- [ ] 19.1 Creating a child generates RSA key pair (no server-side key generation)
+- [ ] 19.2 Public key sent to server during child creation
+- [ ] 19.3 Private key stored in localStorage
+- [ ] 19.4 Messages sent are encrypted (ciphertext visible in server DB)
+- [ ] 19.5 Messages received are decrypted (plaintext visible in chat UI)
+- [ ] 19.6 Decryption failure shows placeholder (e.g. key mismatch)
+- [ ] 19.7 Long messages (>190 bytes) encrypt/decrypt correctly (hybrid AES)

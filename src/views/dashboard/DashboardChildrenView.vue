@@ -207,6 +207,7 @@ import { useI18n } from 'vue-i18n'
 import { fetchChildren, createChild, updateChild, deleteChild, type Child } from '../../services/children'
 import { provisionDevice, revokeDevice } from '../../services/devices'
 import { ApiRequestError } from '../../services/api'
+import { generateKeyPair, storePrivateKey } from '../../services/crypto'
 import { useAuthStore } from '../../stores/auth'
 import { useRouter } from 'vue-router'
 
@@ -249,7 +250,8 @@ async function onAdd() {
   adding.value = true
   try {
     const trimmed = nick.value.trim()
-    const { ID } = await createChild(trimmed)
+    const keyPair = await generateKeyPair()
+    const { ID } = await createChild(trimmed, keyPair.publicKey)
     let deviceId: number
     try {
       const result = await provisionDevice(ID)
@@ -258,6 +260,7 @@ async function onAdd() {
       await deleteChild(ID)
       throw e
     }
+    storePrivateKey(String(ID), keyPair.privateKey)
     nick.value = ''
     await loadChildren()
     activatingChild.value = { nick: trimmed, id: ID, deviceId }
