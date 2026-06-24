@@ -62,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { fetchPendingApprovals, acceptConnection, rejectConnection, type ConnectionRequest } from '../../services/connections'
 import { ApiRequestError } from '../../services/api'
@@ -70,6 +70,8 @@ import { ApiRequestError } from '../../services/api'
 const props = defineProps<{ nickMap?: Record<number, string> }>()
 
 const { t } = useI18n()
+const refreshPendingCount = inject<() => Promise<void>>('refreshPendingCount')
+const refreshConnections = inject<() => Promise<void>>('refreshConnections')
 const requests = ref<ConnectionRequest[]>([])
 const loading = ref(true)
 const processing = ref(false)
@@ -101,6 +103,8 @@ async function onAccept(connId: number) {
   try {
     await acceptConnection(connId)
     await loadRequests()
+    await refreshPendingCount?.()
+    await refreshConnections?.()
   } catch (e) {
     error.value = e instanceof ApiRequestError
       ? e.errDesc
@@ -116,6 +120,8 @@ async function onReject(connId: number) {
   try {
     await rejectConnection(connId)
     await loadRequests()
+    await refreshPendingCount?.()
+    await refreshConnections?.()
   } catch (e) {
     error.value = e instanceof ApiRequestError
       ? e.errDesc

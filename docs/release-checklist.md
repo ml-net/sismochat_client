@@ -109,6 +109,7 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 9.6 Authenticated: /reset-password → redirected to /dashboard
 - [ ] 9.7 Expired JWT on API call → auto-logout + redirect to /login
 - [ ] 9.8 Session rehydration: reload with valid token → stays authenticated
+- [ ] 9.9 Child profile: cannot access /dashboard (gear icon hidden or route blocked)
 
 ## 10. Theming
 
@@ -172,3 +173,38 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 15.3 Lighthouse PWA score ≥ 90
 - [ ] 15.4 All assets load (no 404s in network tab)
 - [ ] 15.5 HTTPS enforced on production URL
+
+## 16. Chat — Contact List
+
+- [ ] 16.1 `/chat` shows contact list (connected users)
+- [ ] 16.2 Loading state shown while fetching
+- [ ] 16.3 Empty state when no connections
+- [ ] 16.4 Each contact shows avatar initial + nickname
+- [ ] 16.5 Last message preview shown under nickname
+- [ ] 16.6 Online/offline indicator dot visible in header
+- [ ] 16.7 Indicator turns green when WebSocket connected
+- [ ] 16.8 Indicator turns gray when disconnected
+- [ ] 16.9 Settings gear navigates to dashboard
+
+## 17. Chat — Conversation
+
+- [ ] 17.1 `/chat/:contactId` shows conversation view
+- [ ] 17.2 Header shows contact initial + nickname + back arrow
+- [ ] 17.3 Empty state when no messages
+- [ ] 17.4 Send message: type text + submit → message appears as sent bubble (right, green)
+- [ ] 17.5 Send message: empty input → button disabled
+- [ ] 17.6 Received messages appear as incoming bubble (left, gray)
+- [ ] 17.7 Each message shows timestamp
+- [ ] 17.8 Messages auto-scroll to bottom on new message
+- [ ] 17.9 Messages persist after page reload (IndexedDB)
+- [ ] 17.10 Back arrow returns to contact list
+
+## 18. Messaging — Real-time & Persistence
+
+- [ ] 18.1 WebSocket connects on entering chat section
+- [ ] 18.2 WebSocket disconnects on leaving chat section
+- [ ] 18.3 New message from other user arrives in real-time (no page refresh)
+- [ ] 18.4 Relay cycle: fetch → store → ACK works (message disappears from server)
+- [ ] 18.5 WebSocket auto-reconnects after network drop
+- [ ] 18.6 Messages survive app restart (stored in IndexedDB)
+- [ ] 18.7 No duplicate messages after reconnect/relay

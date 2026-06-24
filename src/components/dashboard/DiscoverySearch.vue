@@ -107,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, inject } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { searchParent, fetchParentChildren, type DiscoveredParent, type DiscoveredChild } from '../../services/discovery'
 import { fetchChildren, type Child } from '../../services/children'
@@ -115,6 +115,7 @@ import { sendConnectionRequest } from '../../services/connections'
 import { ApiRequestError } from '../../services/api'
 
 const { t } = useI18n()
+const refreshConnections = inject<() => Promise<void>>('refreshConnections')
 const email = ref('')
 const searching = ref(false)
 const sending = ref(false)
@@ -173,6 +174,11 @@ async function onConnect(toChildId: number) {
   try {
     await sendConnectionRequest(fromChildId, toChildId)
     success.value = t('dashboard.connections.discovery.requestSent')
+    email.value = ''
+    found.value = null
+    children.value = []
+    Object.keys(selectedChild).forEach(k => { selectedChild[Number(k)] = '' })
+    await refreshConnections?.()
   } catch (e) {
     if (e instanceof ApiRequestError && e.errCode === 11) {
       error.value = t('dashboard.connections.discovery.alreadyExists')

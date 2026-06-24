@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
@@ -103,14 +103,18 @@ const navItems = [
   { to: { name: 'dashboard-settings' }, icon: '⚙️', labelKey: 'dashboard.nav.settings' },
 ]
 
-onMounted(async () => {
+async function refreshPendingCount() {
   try {
     const pending = await fetchPendingApprovals()
     pendingCount.value = pending.length
   } catch {
     // non-blocking
   }
-})
+}
+
+provide('refreshPendingCount', refreshPendingCount)
+
+onMounted(() => { void refreshPendingCount() })
 
 function onLogout() {
   authStore.clearAuth()
