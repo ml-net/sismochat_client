@@ -1,4 +1,7 @@
+import { apiGet } from './api'
+
 const STORAGE_PREFIX = 'sismochat_privkey_'
+const pubKeyCache: Record<string, string> = {}
 
 const RSA_ALGORITHM: RsaHashedKeyGenParams = {
   name: 'RSA-OAEP',
@@ -32,6 +35,13 @@ export function storePrivateKey(userId: string, pem: string): void {
 
 export function loadPrivateKey(userId: string): string | null {
   return localStorage.getItem(`${STORAGE_PREFIX}${userId}`)
+}
+
+export async function fetchPublicKey(userId: string): Promise<string> {
+  if (pubKeyCache[userId]) return pubKeyCache[userId]
+  const res = await apiGet<{ pubkey: string }>(`/api/v1/users/pubkey/${userId}`)
+  pubKeyCache[userId] = res.pubkey
+  return res.pubkey
 }
 
 export async function encrypt(plaintext: string, recipientPubKeyPem: string): Promise<string> {
