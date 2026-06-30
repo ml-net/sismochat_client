@@ -121,7 +121,7 @@ async function onSubmit() {
     const email = form.email.trim()
     const { token } = await loginParent(email, form.password)
     const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')
-    const payload = JSON.parse(atob(base64)) as { user: number; email: string; profile: string }
+    const payload = JSON.parse(atob(base64)) as { user: string; email: string; profile: string }
     authStore.setAuth(token, { id: payload.user, email: payload.email, profile: payload.profile }, form.rememberMe)
     void router.replace({ name: 'dashboard-home' })
   } catch (err) {

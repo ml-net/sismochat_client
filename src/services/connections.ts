@@ -16,7 +16,7 @@ export const ConnectionStatus = {
   REJECTED: 2,
 } as const
 
-function getParentId(): number {
+function getParentId(): string {
   const user = useAuthStore().user
   if (!user) throw new ApiRequestError(401, 'Session expired')
   return user.id

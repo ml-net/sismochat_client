@@ -5,7 +5,7 @@ const STORAGE_KEY = 'sismochat_auth'
 const PROFILE_KEY = 'sismochat_profile'
 
 export interface AuthUser {
-  id: number
+  id: string
   email: string
   profile: string
 }
@@ -71,7 +71,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (profile) {
       const parsed = JSON.parse(profile) as { id?: string; nick?: string }
       if (parsed.id) {
-        user.value = { id: parsed.id as unknown as number, email: '', profile: 'User' }
+        user.value = { id: parsed.id, email: '', profile: 'User' }
       }
     }
   }
