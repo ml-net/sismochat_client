@@ -199,7 +199,9 @@
       "offline": "Disconnected"
     },
     "message": {
-      "encrypted": "[Encrypted message]"
+      "encrypted": "[Encrypted message]",
+      "sent": "Sent",
+      "downloaded": "Read"
     }
   },
   "notFound": {

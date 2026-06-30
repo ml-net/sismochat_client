@@ -41,7 +41,14 @@
           :class="msg.mine ? 'bg-emerald-600/80 text-white rounded-br-sm' : 'bg-gray-800 text-gray-100 rounded-bl-sm'"
         >
           <p>{{ msg.body }}</p>
-          <span class="block text-[10px] mt-1 opacity-60">{{ formatTime(msg.timestamp) }}</span>
+          <span class="block text-[10px] mt-1 opacity-60">
+            {{ formatTime(msg.timestamp) }}
+            <span
+              v-if="msg.mine"
+              class="ml-1"
+              :title="msg.status === 'downloaded' ? t('chat.message.downloaded') : t('chat.message.sent')"
+            >{{ msg.status === 'downloaded' ? '✓✓' : '✓' }}</span>
+          </span>
         </div>
       </div>
     </main>

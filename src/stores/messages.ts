@@ -139,6 +139,7 @@ export const useMessageStore = defineStore('messages', () => {
           body = i18n.global.t('chat.message.encrypted')
         }
       }
+      const msgStatus: StoredMessage['status'] = full.status >= 1 ? 'downloaded' : 'sent'
       const msg = {
         id: full.id,
         from: full.from,
@@ -147,7 +148,7 @@ export const useMessageStore = defineStore('messages', () => {
         type: full.type,
         timestamp: full.createdAt,
         mine: full.from === currentUserId.value,
-        status: full.status >= 1 ? 'downloaded' : 'sent',
+        status: msgStatus,
       }
       await addMessage(contactId, msg)
 
