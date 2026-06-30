@@ -4,6 +4,7 @@ import { openDB, type IDBPDatabase } from 'idb'
 import { fetchUnread, fetchMessage, sendMessage, ackMessage } from '../services/messages'
 import type { Message } from '../services/messages'
 import { encrypt, decrypt, fetchPublicKey, loadPrivateKey } from '../services/crypto'
+import i18n from '../i18n'
 
 const DB_PREFIX = 'sismochat_messages_'
 const STORE_NAME = 'messages'
@@ -96,9 +97,12 @@ export const useMessageStore = defineStore('messages', () => {
   })
 
   async function send(to: string, body: string, type = 'user') {
-    const pubKey = await fetchPublicKey(to)
-    const encrypted = await encrypt(body, pubKey)
-    const res = await sendMessage(to, encrypted, type)
+    let payload = body
+    if (type === 'user') {
+      const pubKey = await fetchPublicKey(to)
+      payload = await encrypt(body, pubKey)
+    }
+    const res = await sendMessage(to, payload, type)
     const msg = {
       id: res.messageID,
       from: currentUserId.value,
@@ -128,7 +132,9 @@ export const useMessageStore = defineStore('messages', () => {
         const privKey = loadPrivateKey(currentUserId.value)
         if (privKey) {
           try { body = await decrypt(full.body, privKey) }
-          catch { body = '[encrypted]' }
+          catch { body = i18n.global.t('chat.message.encrypted') }
+        } else {
+          body = i18n.global.t('chat.message.encrypted')
         }
       }
       const msg = {

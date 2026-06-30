@@ -41,6 +41,9 @@ export async function authenticateDevice(profile: ChildProfile): Promise<string>
   }
 
   const data = (await res.json()) as DeviceAuthResponse
+  if (!data.token) {
+    throw new ApiRequestError(401, 'Invalid auth response: missing token')
+  }
   return data.token
 }
 

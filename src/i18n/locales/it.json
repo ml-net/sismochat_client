@@ -197,6 +197,9 @@
     "status": {
       "online": "Connesso",
       "offline": "Disconnesso"
+    },
+    "message": {
+      "encrypted": "[Messaggio cifrato]"
     }
   },
   "notFound": {
