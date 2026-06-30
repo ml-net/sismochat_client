@@ -53,7 +53,7 @@ async function signWithPrivateKey(data: string, privateKeyPem: string): Promise<
   const privateKey = await crypto.subtle.importKey(
     'pkcs8',
     keyData,
-    { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA256' },
+    { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
     false,
     ['sign'],
   )
