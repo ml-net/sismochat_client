@@ -67,6 +67,13 @@ export const useAuthStore = defineStore('auth', () => {
 
   function setChildToken(jwt: string) {
     token.value = jwt
+    const profile = localStorage.getItem(PROFILE_KEY)
+    if (profile) {
+      const parsed = JSON.parse(profile) as { id?: string; nick?: string }
+      if (parsed.id) {
+        user.value = { id: parsed.id as unknown as number, email: '', profile: 'User' }
+      }
+    }
   }
 
   return { token, user, isAuthenticated, hydrate, setAuth, setChildToken, clearAuth }
