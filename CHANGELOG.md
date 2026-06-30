@@ -4,6 +4,40 @@ All notable changes to this project are documented in this file.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v0.4.0] - 2026-06-30 — Messaging
+
+### Added
+
+- Chat layout with contact list and conversation views (#120)
+- Messaging service with IndexedDB persistence and relay cycle (#121)
+- WebSocket real-time notifications with auto-reconnect (#122)
+- Online/offline connection indicator in chat header (#122)
+- E2E encryption: hybrid RSA-OAEP + AES-256-GCM via Web Crypto API (#123)
+- RSA key pair generation at child device provisioning (#123)
+- Device authentication on boot via RSASSA-PKCS1-v1_5 signature (#142)
+- Message status indicators: ✓ (sent) / ✓✓ (downloaded) (#124)
+- Real-time delivery confirmation via WebSocket event (#124)
+- Message withdraw: right-click to retract unread messages (#124)
+- Withdraw confirmation dialog with accessibility (aria, focus trap, Escape) (#124)
+- Release checklist sections for messaging, encryption, and status (#124)
+- i18n translations for all messaging flows (English + Italian)
+
+### Changed
+
+- AuthUser.id type corrected from number to string (UUID)
+- Route guard redirects child to splash for re-authentication on reload
+- Encryption only applied to user messages (not system messages)
+
+### Fixed
+
+- Child device cannot access chat without JWT (#142)
+- Type error in crypto service (iv.buffer for ArrayBuffer compatibility)
+- Decryption failure shows localized placeholder instead of raw ciphertext
+
+### Requires
+
+- API v0.11.1 (device auth via crypto.verify, message_downloaded WS event)
+
 ## [v0.3.1] - 2026-06-19 — API v0.11.0 Compatibility
 
 ### Changed
