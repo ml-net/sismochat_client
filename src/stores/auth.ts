@@ -65,5 +65,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { token, user, isAuthenticated, hydrate, setAuth, clearAuth }
+  function setChildToken(jwt: string) {
+    token.value = jwt
+  }
+
+  return { token, user, isAuthenticated, hydrate, setAuth, setChildToken, clearAuth }
 })
