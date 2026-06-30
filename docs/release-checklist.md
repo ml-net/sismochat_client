@@ -218,3 +218,16 @@ Use this checklist after every deploy to verify no regressions.
 - [ ] 19.5 Messages received are decrypted (plaintext visible in chat UI)
 - [ ] 19.6 Decryption failure shows placeholder (e.g. key mismatch)
 - [ ] 19.7 Long messages (>190 bytes) encrypt/decrypt correctly (hybrid AES)
+
+## 20. Message Status & Withdraw
+
+- [ ] 20.1 Sent messages show single check (✓) after sending
+- [ ] 20.2 Check updates to double (✓✓) when recipient downloads the message
+- [ ] 20.3 Status update arrives in real-time via WebSocket (no page refresh needed)
+- [ ] 20.4 Right-click (desktop) on own unread message shows withdraw dialog
+- [ ] 20.5 Withdraw dialog has confirmation prompt and cancel option
+- [ ] 20.6 Confirming withdraw removes message locally and from server
+- [ ] 20.7 Withdraw not available on messages already downloaded (✓✓)
+- [ ] 20.8 Withdraw on already-downloaded message shows server error message
+- [ ] 20.9 Status persists after page reload (IndexedDB)
+- [ ] 20.10 Keyboard accessible: Escape closes dialog, focus trapped in dialog
