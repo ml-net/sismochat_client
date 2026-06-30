@@ -44,6 +44,9 @@ router.beforeEach((to) => {
   if (to.meta.auth && !authStore.isAuthenticated && !isChild) {
     return { name: 'login' }
   }
+  if (to.meta.auth && !authStore.isAuthenticated && isChild && to.name !== 'splash') {
+    return { name: 'splash' }
+  }
   if (to.meta.guest && authStore.isAuthenticated) {
     return { name: 'dashboard-home' }
   }

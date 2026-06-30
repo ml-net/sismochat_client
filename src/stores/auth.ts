@@ -5,7 +5,7 @@ const STORAGE_KEY = 'sismochat_auth'
 const PROFILE_KEY = 'sismochat_profile'
 
 export interface AuthUser {
-  id: number
+  id: string
   email: string
   profile: string
 }
@@ -65,5 +65,16 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { token, user, isAuthenticated, hydrate, setAuth, clearAuth }
+  function setChildToken(jwt: string) {
+    token.value = jwt
+    const profile = localStorage.getItem(PROFILE_KEY)
+    if (profile) {
+      const parsed = JSON.parse(profile) as { id?: string; nick?: string }
+      if (parsed.id) {
+        user.value = { id: parsed.id, email: '', profile: 'User' }
+      }
+    }
+  }
+
+  return { token, user, isAuthenticated, hydrate, setAuth, setChildToken, clearAuth }
 })

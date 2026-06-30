@@ -12,8 +12,10 @@ export function fetchChildren(): Promise<Child[]> {
   return apiGet<Child[]>(`/api/v1/parents/${encodeURIComponent(email)}/children`)
 }
 
-export function createChild(nick: string): Promise<{ ID: number }> {
-  return apiPost<{ ID: number }>('/api/v1/users', { nick })
+export function createChild(nick: string, pk?: string): Promise<{ ID: number }> {
+  const body: Record<string, unknown> = { nick }
+  if (pk) body.pk = pk
+  return apiPost<{ ID: number }>('/api/v1/users', body)
 }
 
 export function updateChild(id: number, nick: string): Promise<Child> {

@@ -3,6 +3,8 @@ import { ref, computed } from 'vue'
 import { openDB, type IDBPDatabase } from 'idb'
 import { fetchUnread, fetchMessage, sendMessage, ackMessage } from '../services/messages'
 import type { Message } from '../services/messages'
+import { encrypt, decrypt, fetchPublicKey, loadPrivateKey } from '../services/crypto'
+import i18n from '../i18n'
 
 const DB_PREFIX = 'sismochat_messages_'
 const STORE_NAME = 'messages'
@@ -95,7 +97,12 @@ export const useMessageStore = defineStore('messages', () => {
   })
 
   async function send(to: string, body: string, type = 'user') {
-    const res = await sendMessage(to, body, type)
+    let payload = body
+    if (type === 'user') {
+      const pubKey = await fetchPublicKey(to)
+      payload = await encrypt(body, pubKey)
+    }
+    const res = await sendMessage(to, payload, type)
     const msg = {
       id: res.messageID,
       from: currentUserId.value,
@@ -120,11 +127,21 @@ export const useMessageStore = defineStore('messages', () => {
       catch { continue }
 
       const contactId = full.from === currentUserId.value ? full.to : full.from
+      let body = full.body
+      if (full.type === 'user') {
+        const privKey = loadPrivateKey(currentUserId.value)
+        if (privKey) {
+          try { body = await decrypt(full.body, privKey) }
+          catch { body = i18n.global.t('chat.message.encrypted') }
+        } else {
+          body = i18n.global.t('chat.message.encrypted')
+        }
+      }
       const msg = {
         id: full.id,
         from: full.from,
         to: full.to,
-        body: full.body,
+        body,
         type: full.type,
         timestamp: full.createdAt,
         mine: full.from === currentUserId.value,
