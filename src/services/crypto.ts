@@ -51,7 +51,7 @@ export async function encrypt(plaintext: string, recipientPubKeyPem: string): Pr
   const encoded = new TextEncoder().encode(plaintext)
   const ciphertext = await crypto.subtle.encrypt({ name: AES_ALGORITHM, iv }, aesKey, encoded)
   const wrappedKey = await crypto.subtle.wrapKey('raw', aesKey, pubKey, { name: 'RSA-OAEP' })
-  return `${toBase64(wrappedKey)}.${toBase64(iv)}.${toBase64(ciphertext)}`
+  return `${toBase64(wrappedKey)}.${toBase64(iv.buffer)}.${toBase64(ciphertext)}`
 }
 
 export async function decrypt(payload: string, privateKeyPem: string): Promise<string> {
