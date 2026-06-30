@@ -19,6 +19,7 @@ export interface StoredMessage {
   type: string
   timestamp: string
   mine: boolean
+  status: 'sent' | 'downloaded'
 }
 
 async function getDb(userId: string): Promise<IDBPDatabase> {
@@ -111,6 +112,7 @@ export const useMessageStore = defineStore('messages', () => {
       type,
       timestamp: new Date().toISOString(),
       mine: true,
+      status: 'sent' as const,
     }
     await addMessage(to, msg)
     return res
@@ -145,6 +147,7 @@ export const useMessageStore = defineStore('messages', () => {
         type: full.type,
         timestamp: full.createdAt,
         mine: full.from === currentUserId.value,
+        status: full.status >= 1 ? 'downloaded' : 'sent',
       }
       await addMessage(contactId, msg)
 
@@ -159,6 +162,15 @@ export const useMessageStore = defineStore('messages', () => {
     if (db) await db.delete(STORE_NAME, msgId)
   }
 
+  async function updateMessageStatus(contactId: string, msgId: number, status: 'sent' | 'downloaded') {
+    const msgs = conversations.value[contactId]
+    if (!msgs) return
+    const msg = msgs.find(m => m.id === msgId)
+    if (!msg || msg.status === status) return
+    msg.status = status
+    if (db) await db.put(STORE_NAME, { ...msg, contactId })
+  }
+
   async function clear() {
     conversations.value = {}
     if (db) {
@@ -168,5 +180,5 @@ export const useMessageStore = defineStore('messages', () => {
     }
   }
 
-  return { conversations, currentUserId, hydrate, send, relay, getMessages, lastMessageByContact, addMessage, removeMessage, clear }
+  return { conversations, currentUserId, hydrate, send, relay, getMessages, lastMessageByContact, addMessage, removeMessage, updateMessageStatus, clear }
 })
