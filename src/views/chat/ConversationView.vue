@@ -58,7 +58,11 @@
     <div
       v-if="withdrawingMsgId"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="t('chat.message.withdraw')"
       @click.self="withdrawingMsgId = null"
+      @keydown.escape="withdrawingMsgId = null"
     >
       <div class="bg-gray-800 rounded-xl p-6 max-w-sm w-full mx-4 shadow-lg">
         <p class="text-white mb-4">
@@ -66,6 +70,7 @@
         </p>
         <div class="flex justify-end gap-2">
           <button
+            ref="cancelBtn"
             type="button"
             class="px-4 py-2 rounded-lg bg-gray-700 text-gray-300"
             @click="withdrawingMsgId = null"
@@ -84,6 +89,7 @@
         <p
           v-if="withdrawError"
           class="text-red-400 text-sm mt-2"
+          role="alert"
         >
           {{ withdrawError }}
         </p>
@@ -142,6 +148,7 @@ const messagesContainer = ref<HTMLElement | null>(null)
 const withdrawingMsgId = ref<number | null>(null)
 const withdrawing = ref(false)
 const withdrawError = ref('')
+const cancelBtn = ref<HTMLButtonElement | null>(null)
 
 const contactId = computed(() => route.params.contactId as string)
 const contactNick = computed(() => route.query.nick as string || contactId.value)
@@ -174,6 +181,7 @@ async function onSend() {
 function showWithdraw(msgId: number) {
   withdrawingMsgId.value = msgId
   withdrawError.value = ''
+  void nextTick(() => cancelBtn.value?.focus())
 }
 
 async function confirmWithdraw() {
@@ -185,7 +193,7 @@ async function confirmWithdraw() {
     withdrawingMsgId.value = null
   } catch (e) {
     if (e instanceof ApiRequestError) {
-      withdrawError.value = e.errDesc || t('chat.message.withdrawFailed')
+      withdrawError.value = e.errDesc
     } else {
       withdrawError.value = t('chat.message.withdrawFailed')
     }

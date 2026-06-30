@@ -205,7 +205,7 @@
       "withdrawConfirm": "Withdraw this message? It will be deleted for both you and the recipient.",
       "withdraw": "Withdraw",
       "cancel": "Cancel",
-      "withdrawFailed": "Cannot withdraw: message already read"
+      "withdrawFailed": "Could not withdraw message"
     }
   },
   "notFound": {

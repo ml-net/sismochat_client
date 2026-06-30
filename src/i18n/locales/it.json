@@ -205,7 +205,7 @@
       "withdrawConfirm": "Ritirare questo messaggio? Verrà eliminato per te e per il destinatario.",
       "withdraw": "Ritira",
       "cancel": "Annulla",
-      "withdrawFailed": "Impossibile ritirare: messaggio già letto"
+      "withdrawFailed": "Impossibile ritirare il messaggio"
     }
   },
   "notFound": {
