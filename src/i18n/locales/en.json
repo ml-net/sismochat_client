@@ -201,7 +201,11 @@
     "message": {
       "encrypted": "[Encrypted message]",
       "sent": "Sent",
-      "downloaded": "Read"
+      "downloaded": "Read",
+      "withdrawConfirm": "Withdraw this message? It will be deleted for both you and the recipient.",
+      "withdraw": "Withdraw",
+      "cancel": "Cancel",
+      "withdrawFailed": "Cannot withdraw: message already read"
     }
   },
   "notFound": {

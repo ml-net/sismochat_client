@@ -201,7 +201,11 @@
     "message": {
       "encrypted": "[Messaggio cifrato]",
       "sent": "Inviato",
-      "downloaded": "Letto"
+      "downloaded": "Letto",
+      "withdrawConfirm": "Ritirare questo messaggio? Verrà eliminato per te e per il destinatario.",
+      "withdraw": "Ritira",
+      "cancel": "Annulla",
+      "withdrawFailed": "Impossibile ritirare: messaggio già letto"
     }
   },
   "notFound": {

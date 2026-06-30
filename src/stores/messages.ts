@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { openDB, type IDBPDatabase } from 'idb'
-import { fetchUnread, fetchMessage, sendMessage, ackMessage } from '../services/messages'
+import { fetchUnread, fetchMessage, sendMessage, ackMessage, withdrawMessage } from '../services/messages'
 import type { Message } from '../services/messages'
 import { encrypt, decrypt, fetchPublicKey, loadPrivateKey } from '../services/crypto'
 import i18n from '../i18n'
@@ -172,6 +172,11 @@ export const useMessageStore = defineStore('messages', () => {
     if (db) await db.put(STORE_NAME, { ...msg, contactId })
   }
 
+  async function withdraw(contactId: string, msgId: number) {
+    await withdrawMessage(msgId)
+    await removeMessage(contactId, msgId)
+  }
+
   async function clear() {
     conversations.value = {}
     if (db) {
@@ -181,5 +186,5 @@ export const useMessageStore = defineStore('messages', () => {
     }
   }
 
-  return { conversations, currentUserId, hydrate, send, relay, getMessages, lastMessageByContact, addMessage, removeMessage, updateMessageStatus, clear }
+  return { conversations, currentUserId, hydrate, send, relay, getMessages, lastMessageByContact, addMessage, removeMessage, updateMessageStatus, withdraw, clear }
 })
