@@ -39,12 +39,62 @@
         <div
           class="max-w-[75%] px-3 py-2 rounded-xl text-sm"
           :class="msg.mine ? 'bg-emerald-600/80 text-white rounded-br-sm' : 'bg-gray-800 text-gray-100 rounded-bl-sm'"
+          @contextmenu.prevent="msg.mine && msg.status === 'sent' ? showWithdraw(msg.id) : undefined"
         >
           <p>{{ msg.body }}</p>
-          <span class="block text-[10px] mt-1 opacity-60">{{ formatTime(msg.timestamp) }}</span>
+          <span class="block text-[10px] mt-1 opacity-60">
+            {{ formatTime(msg.timestamp) }}
+            <span
+              v-if="msg.mine"
+              class="ml-1"
+              :title="msg.status === 'downloaded' ? t('chat.message.downloaded') : t('chat.message.sent')"
+            >{{ msg.status === 'downloaded' ? '✓✓' : '✓' }}</span>
+          </span>
         </div>
       </div>
     </main>
+
+    <!-- Withdraw confirmation dialog -->
+    <div
+      v-if="withdrawingMsgId"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+      role="dialog"
+      aria-modal="true"
+      :aria-label="t('chat.message.withdraw')"
+      @click.self="withdrawingMsgId = null"
+      @keydown.escape="withdrawingMsgId = null"
+    >
+      <div class="bg-gray-800 rounded-xl p-6 max-w-sm w-full mx-4 shadow-lg">
+        <p class="text-white mb-4">
+          {{ t('chat.message.withdrawConfirm') }}
+        </p>
+        <div class="flex justify-end gap-2">
+          <button
+            ref="cancelBtn"
+            type="button"
+            class="px-4 py-2 rounded-lg bg-gray-700 text-gray-300"
+            @click="withdrawingMsgId = null"
+          >
+            {{ t('chat.message.cancel') }}
+          </button>
+          <button
+            type="button"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white"
+            :disabled="withdrawing"
+            @click="confirmWithdraw"
+          >
+            {{ t('chat.message.withdraw') }}
+          </button>
+        </div>
+        <p
+          v-if="withdrawError"
+          class="text-red-400 text-sm mt-2"
+          role="alert"
+        >
+          {{ withdrawError }}
+        </p>
+      </div>
+    </div>
 
     <!-- Input bar -->
     <footer class="px-4 py-3 bg-gray-900/80 border-t border-emerald-500/20">
@@ -87,6 +137,7 @@ import { ref, computed, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMessageStore } from '../../stores/messages'
+import { ApiRequestError } from '../../services/api'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -94,6 +145,10 @@ const messageStore = useMessageStore()
 const message = ref('')
 const sending = ref(false)
 const messagesContainer = ref<HTMLElement | null>(null)
+const withdrawingMsgId = ref<number | null>(null)
+const withdrawing = ref(false)
+const withdrawError = ref('')
+const cancelBtn = ref<HTMLButtonElement | null>(null)
 
 const contactId = computed(() => route.params.contactId as string)
 const contactNick = computed(() => route.query.nick as string || contactId.value)
@@ -121,5 +176,29 @@ async function onSend() {
   try { await messageStore.send(contactId.value, body) }
   catch { message.value = body }
   finally { sending.value = false }
+}
+
+function showWithdraw(msgId: number) {
+  withdrawingMsgId.value = msgId
+  withdrawError.value = ''
+  void nextTick(() => cancelBtn.value?.focus())
+}
+
+async function confirmWithdraw() {
+  if (!withdrawingMsgId.value || withdrawing.value) return
+  withdrawing.value = true
+  withdrawError.value = ''
+  try {
+    await messageStore.withdraw(contactId.value, withdrawingMsgId.value)
+    withdrawingMsgId.value = null
+  } catch (e) {
+    if (e instanceof ApiRequestError) {
+      withdrawError.value = e.errDesc
+    } else {
+      withdrawError.value = t('chat.message.withdrawFailed')
+    }
+  } finally {
+    withdrawing.value = false
+  }
 }
 </script>

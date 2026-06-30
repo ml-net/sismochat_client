@@ -33,7 +33,19 @@ const unsubscribe = onWsEvent((event) => {
     }
     triggerRelay()
   }
+  if (event.type === 'message_downloaded' && event.msgId) {
+    void handleDownloadConfirmation(event.msgId as number)
+  }
 })
+
+async function handleDownloadConfirmation(msgId: number) {
+  for (const [contactId, msgs] of Object.entries(messageStore.conversations)) {
+    if (msgs.some(m => m.id === msgId)) {
+      await messageStore.updateMessageStatus(contactId, msgId, 'downloaded')
+      return
+    }
+  }
+}
 
 function triggerRelay() {
   relaying = true

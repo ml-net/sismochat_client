@@ -31,3 +31,7 @@ export function sendMessage(to: string, message: string, type = 'user'): Promise
 export function ackMessage(msgID: number): Promise<void> {
   return apiDelete<void>(`/api/v1/messages/${msgID}`)
 }
+
+export function withdrawMessage(msgID: number): Promise<void> {
+  return apiDelete<void>(`/api/v1/messages/${msgID}`)
+}

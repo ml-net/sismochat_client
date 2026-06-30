@@ -199,7 +199,13 @@
       "offline": "Disconnected"
     },
     "message": {
-      "encrypted": "[Encrypted message]"
+      "encrypted": "[Encrypted message]",
+      "sent": "Sent",
+      "downloaded": "Read",
+      "withdrawConfirm": "Withdraw this message? It will be deleted for both you and the recipient.",
+      "withdraw": "Withdraw",
+      "cancel": "Cancel",
+      "withdrawFailed": "Could not withdraw message"
     }
   },
   "notFound": {
