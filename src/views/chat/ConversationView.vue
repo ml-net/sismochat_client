@@ -40,6 +40,10 @@
           class="max-w-[75%] px-3 py-2 rounded-xl text-sm"
           :class="msg.mine ? 'bg-emerald-600/80 text-white rounded-br-sm' : 'bg-gray-800 text-gray-100 rounded-bl-sm'"
           @contextmenu.prevent="msg.mine && msg.status === 'sent' ? showWithdraw(msg.id) : undefined"
+          @touchstart.passive="onTouchStart($event, msg.id, msg.mine && msg.status === 'sent')"
+          @touchmove.passive="lpMove"
+          @touchend.passive="lpEnd"
+          @touchcancel.passive="lpEnd"
         >
           <p>{{ msg.body }}</p>
           <span class="block text-[10px] mt-1 opacity-60">
@@ -138,6 +142,7 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMessageStore } from '../../stores/messages'
 import { ApiRequestError } from '../../services/api'
+import { useLongPress } from '../../composables/useLongPress'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -154,6 +159,24 @@ const contactId = computed(() => route.params.contactId as string)
 const contactNick = computed(() => route.query.nick as string || contactId.value)
 const contactInitial = computed(() => contactNick.value.charAt(0).toUpperCase())
 const messages = computed(() => messageStore.getMessages(contactId.value))
+
+const longPressMsgId = ref<number | null>(null)
+
+const { start: lpStart, move: lpMove, end: lpEnd } = useLongPress(
+  () => {
+    if (longPressMsgId.value !== null) {
+      showWithdraw(longPressMsgId.value)
+      longPressMsgId.value = null
+    }
+  }
+)
+
+function onTouchStart(e: TouchEvent, msgId: number, canWithdraw: boolean) {
+  if (!canWithdraw) return
+  longPressMsgId.value = msgId
+  lpStart(e)
+}
+
 
 function formatTime(ts: string): string {
   const d = new Date(ts)
