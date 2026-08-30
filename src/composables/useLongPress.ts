@@ -28,6 +28,7 @@ export function useLongPress(
   let startY = 0
 
   function start(e: TouchEvent) {
+    cancel()
     const touch = e.touches[0]
     startX = touch.clientX
     startY = touch.clientY

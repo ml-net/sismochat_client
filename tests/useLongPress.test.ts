@@ -82,31 +82,38 @@ describe('useLongPress', () => {
     expect(callback).toHaveBeenCalledOnce()
   })
 
-  it('triggers haptic feedback when available', () => {
+  describe('haptic feedback', () => {
     const vibrateMock = vi.fn()
-    Object.defineProperty(navigator, 'vibrate', { value: vibrateMock, configurable: true })
 
-    const callback = vi.fn()
-    const { start } = useLongPress(callback, { vibrationDuration: 50 })
+    beforeEach(() => {
+      Object.defineProperty(navigator, 'vibrate', { value: vibrateMock, configurable: true })
+    })
 
-    start(createTouchEvent('touchstart', 0, 0))
-    vi.advanceTimersByTime(500)
+    afterEach(() => {
+      vibrateMock.mockReset()
+      Object.defineProperty(navigator, 'vibrate', { value: undefined, configurable: true })
+    })
 
-    expect(vibrateMock).toHaveBeenCalledWith(50)
-  })
+    it('triggers haptic feedback when available', () => {
+      const callback = vi.fn()
+      const { start } = useLongPress(callback, { vibrationDuration: 50 })
 
-  it('skips haptic when vibrationDuration is 0', () => {
-    const vibrateMock = vi.fn()
-    Object.defineProperty(navigator, 'vibrate', { value: vibrateMock, configurable: true })
+      start(createTouchEvent('touchstart', 0, 0))
+      vi.advanceTimersByTime(500)
 
-    const callback = vi.fn()
-    const { start } = useLongPress(callback, { vibrationDuration: 0 })
+      expect(vibrateMock).toHaveBeenCalledWith(50)
+    })
 
-    start(createTouchEvent('touchstart', 0, 0))
-    vi.advanceTimersByTime(500)
+    it('skips haptic when vibrationDuration is 0', () => {
+      const callback = vi.fn()
+      const { start } = useLongPress(callback, { vibrationDuration: 0 })
 
-    expect(vibrateMock).not.toHaveBeenCalled()
-    expect(callback).toHaveBeenCalledOnce()
+      start(createTouchEvent('touchstart', 0, 0))
+      vi.advanceTimersByTime(500)
+
+      expect(vibrateMock).not.toHaveBeenCalled()
+      expect(callback).toHaveBeenCalledOnce()
+    })
   })
 
   it('sets pressing to true during hold and false after', () => {

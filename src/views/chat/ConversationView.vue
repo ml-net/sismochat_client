@@ -37,13 +37,14 @@
         :class="msg.mine ? 'justify-end' : 'justify-start'"
       >
         <div
-          class="max-w-[75%] px-3 py-2 rounded-xl text-sm"
+          class="max-w-[75%] px-3 py-2 rounded-xl text-sm select-none"
           :class="msg.mine ? 'bg-emerald-600/80 text-white rounded-br-sm' : 'bg-gray-800 text-gray-100 rounded-bl-sm'"
+          style="-webkit-touch-callout: none;"
           @contextmenu.prevent="msg.mine && msg.status === 'sent' ? showWithdraw(msg.id) : undefined"
           @touchstart.passive="onTouchStart($event, msg.id, msg.mine && msg.status === 'sent')"
           @touchmove.passive="lpMove"
-          @touchend.passive="lpEnd"
-          @touchcancel.passive="lpEnd"
+          @touchend.passive="onTouchEnd"
+          @touchcancel.passive="onTouchEnd"
         >
           <p>{{ msg.body }}</p>
           <span class="block text-[10px] mt-1 opacity-60">
@@ -175,6 +176,11 @@ function onTouchStart(e: TouchEvent, msgId: number, canWithdraw: boolean) {
   if (!canWithdraw) return
   longPressMsgId.value = msgId
   lpStart(e)
+}
+
+function onTouchEnd() {
+  lpEnd()
+  longPressMsgId.value = null
 }
 
 
